@@ -1,3 +1,4 @@
+import Link from "next/link"
 import "./globals.css"
 import type { Metadata } from "next"
 // import { Inter } from 'next/font/google'
@@ -5,19 +6,24 @@ import type { Metadata } from "next"
 // const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "one flea market | home",
+  title: "One Flea Market | Home",
   description: "거래 플랫폼"
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  let login = false
   return (
-    <html lang="en">
+    <html lang="ko">
       <body
       // className={inter.className}
       >
-        <header className="flex w-full justify-between px-36 py-3 [&>*]:font-bold fixed top-0 shadow-lg">
+        <header className="flex w-full justify-between px-36 py-3 [&>*]:font-bold fixed top-0 shadow-lg bg-white">
           <div>
-            <span className="text-base mr-1">원플리마켓</span>
+            <span className="text-base mr-1">
+              <Link href="/" prefetch={false}>
+                원플리마켓
+              </Link>
+            </span>
             <span className="[&>*]:text-xs [&>*]:mx-1 [&>*]:text-gray-600">
               {["질문", "거래|대여", "자유 게시판"].map(item => (
                 <span key={item} className="hover:text-blue-300">
@@ -27,9 +33,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </span>
           </div>
           <div className="[&>*:nth-child(even)]:mx-5">
-            <span>admin</span>
-            <span>logout</span>
-            <span>cart</span>
+            {login ? (
+              <>
+                <span>admin</span>
+                <span>log-out</span>
+                <span>cart</span>
+              </>
+            ) : (
+              <>
+                {["log-in", "sign-in"].map(item => (
+                  <span key={item}>
+                    <Link href={item.split("-").join("")} prefetch={false}>
+                      {item}
+                    </Link>
+                  </span>
+                ))}
+              </>
+            )}
           </div>
         </header>
         <div className="mx-36 my-14">{children}</div>
