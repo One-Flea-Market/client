@@ -1,17 +1,18 @@
 import Link from "next/link"
 import "./globals.css"
-// import type { Metadata } from "next"
-// import { Inter } from 'next/font/google'
+import { Inter } from "next/font/google"
+const inter = Inter({ subsets: ["cyrillic"] })
 
-// const inter = Inter({ subsets: ['latin', ] })
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   let login = false
+  const data = await (
+    await fetch("https://jsonplaceholder.typicode.com/todos/1", { cache: "no-store" })
+  ).json()
+  //json place holder => "/check"
+  // console.log(data)
   return (
     <html lang="ko">
-      <body
-      // className={inter.className}
-      >
+      <body className={inter.className}>
         <header className="flex w-full justify-between px-3 md:px-16 lg:px-36 py-3 [&>*]:font-bold fixed top-0 shadow-lg bg-white">
           <div>
             <span className="text-xs lg:text-base mr-1">
@@ -27,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               ))}
             </span>
           </div>
-          <div className="[&>*:nth-child(even)]:mx-5">
+          <div className="text-xs lg:[&>*]:text-base [&>*:nth-child(even)]:mx-5">
             {login ? (
               <>
                 <span>admin</span>

@@ -23,14 +23,19 @@ const UserInputComponent = ({
   const valid = async (data: Record<string, string>) => {
     try {
       // throw new Error("error")
-      setLoading(state => !state)
+      setLoading(true)
       const res = await (
         await axios.post("https://jsonplaceholder.typicode.com/posts", { ...data })
       ).data
+      //json place holder대신 props로받은 url넣기
       console.log(res)
-      // if(res.success) {alert(res.result); replace('/')}
+      // if (res.success) {
+      //   alert(res.result)
+      //   window.location.replace("/")
+      // }
       //  else {alert(res.result); setLoading(state => !state)}
     } catch (error) {
+      setLoading(false)
       console.log(error)
     }
   }
