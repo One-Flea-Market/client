@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             )}
           </div>
         </header>
-        <div className="mx-36 my-14">{children}</div>
+        <div className="mx-5 lg:mx-36 my-14">{children}</div>
       </body>
     </html>
   )

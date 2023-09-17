@@ -76,7 +76,7 @@ const UserInputComponent = ({
         <input
           type="submit"
           value={pageValue}
-          className="bg-blue-600 p-2 rounded-lg h-12 ml-4 text-white hover:opacity-70"
+          className="bg-blue-600 p-2 rounded-lg h-12 ml-4 text-white hover:opacity-70 cursor-pointer"
           disabled={loading}
         />
       </div>
