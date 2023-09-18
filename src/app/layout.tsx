@@ -4,7 +4,7 @@ import { Inter } from "next/font/google"
 const inter = Inter({ subsets: ["cyrillic"] })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let login = false
+  let login = true
   const data = await (
     await fetch("https://jsonplaceholder.typicode.com/todos/1", { cache: "no-store" })
   ).json()
@@ -13,9 +13,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="ko">
       <body className={inter.className}>
-        <header className="flex w-full justify-between px-3 md:px-16 lg:px-36 py-3 [&>*]:font-bold fixed top-0 shadow-lg bg-white">
+        <header className="z-10 flex w-full justify-between px-3 md:px-16 lg:px-36 py-3 [&>*]:font-bold fixed top-0 shadow-lg bg-white">
           <div>
-            <span className="text-xs lg:text-base mr-1">
+            <span className="text-xs lg:text-base mr-1 hover:text-blue-300">
               <Link href="/" prefetch={false}>
                 원플리마켓
               </Link>
@@ -28,17 +28,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               ))}
             </span>
           </div>
-          <div className="text-xs lg:[&>*]:text-base [&>*:nth-child(even)]:mx-5">
+          <div className="text-xs lg:[&>*]:text-base [&>*:nth-child(even)]:mx-5 ">
             {login ? (
               <>
-                <span>admin</span>
-                <span>log-out</span>
-                <span>cart</span>
+                {["admin", "log-out", "cart"].map(item => (
+                  <span key={item} className="hover:text-blue-300">
+                    {item}
+                  </span>
+                ))}
               </>
             ) : (
               <>
                 {["log-in", "sign-in"].map(item => (
-                  <span key={item}>
+                  <span key={item} className="hover:text-blue-300">
                     <Link href={item} prefetch={false}>
                       {item}
                     </Link>
