@@ -14,7 +14,7 @@ const SignIn = () => {
         settingOption={[
           { plac: "email", type: "email" },
           { plac: "password", type: "password" },
-          { plac: "name", type: "text" },
+          { plac: "nick name", type: "text" },
           { plac: "phone-number", type: "text" }
         ]}
         pageValue="Sign-in"

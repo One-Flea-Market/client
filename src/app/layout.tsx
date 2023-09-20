@@ -21,20 +21,25 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               </Link>
             </span>
             <span className="text-xxs lg:[&>*]:text-xs [&>*]:mx-1 [&>*]:text-gray-600">
-              {["질문", "거래|대여", "자유 게시판"].map(item => (
-                <span key={item} className="hover:text-blue-300">
-                  {item}
-                </span>
+              {[
+                { link: "question", title: "질문" },
+                { link: "transaction", title: "거래" },
+                { link: "rental", title: "대여" },
+                { link: "board", title: "자유 게시판" }
+              ].map(item => (
+                <Link key={item.title} href={item.link} prefetch={false}>
+                  <span className="hover:text-blue-300">{item.title}</span>
+                </Link>
               ))}
             </span>
           </div>
           <div className="text-xs lg:[&>*]:text-base [&>*:nth-child(even)]:mx-5 ">
             {login ? (
               <>
-                {["admin", "log-out", "cart"].map(item => (
-                  <span key={item} className="hover:text-blue-300">
-                    {item}
-                  </span>
+                {["admin", "log_out", "cart"].map(item => (
+                  <Link key={item} href={item} prefetch={false}>
+                    <span className="hover:text-blue-300">{item}</span>
+                  </Link>
                 ))}
               </>
             ) : (
