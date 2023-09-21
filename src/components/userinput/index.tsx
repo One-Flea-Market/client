@@ -1,8 +1,8 @@
 "use client"
-import axios from "axios"
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
+import useSubmit from "@/hooks/useSubmit/index"
 const UserInputComponent = ({
   settingOption,
   pageValue,
@@ -19,26 +19,7 @@ const UserInputComponent = ({
   } = useForm()
 
   const { replace, push } = useRouter()
-  const [loading, setLoading] = useState(false)
-  const valid = async (data: Record<string, string>) => {
-    try {
-      // throw new Error("error")
-      setLoading(true)
-      const res = await (
-        await axios.post("https://jsonplaceholder.typicode.com/posts", { ...data })
-      ).data
-      //json place holder대신 props로받은 url넣기
-      console.log(res)
-      // if (res.success) {
-      //   alert(res.result)
-      //   window.location.replace("/")
-      // }
-      //  else {alert(res.result); setLoading(state => !state)}
-    } catch (error) {
-      setLoading(false)
-      console.log(error)
-    }
-  }
+  const { loading, valid } = useSubmit(url)
   return (
     <form className="flex justify-center flex-col lg:flex-row" onSubmit={handleSubmit(valid)}>
       <div className="flex flex-col mt-5 [&>*]:w-[75vw] md:[&>*]:w-[45vw] [&>*]:mb-3">
@@ -85,4 +66,3 @@ const UserInputComponent = ({
 }
 
 export default UserInputComponent
-//비동기 예외처리및 에러페이지로이동 (push)
