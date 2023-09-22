@@ -27,6 +27,24 @@ const InquiryForm = () => {
       >
         {errors["title"] ? <>{errors["title"]?.message}</> : null}
       </div>
+
+      <input
+        type="email"
+        placeholder="email"
+        className={`border-4 mt-5 ${
+          errors["title"] ? "border-red-300" : "border-blue-300"
+        } h-14 w-full`}
+        {...register("email", {
+          required: "필수 양식 입니다."
+        })}
+      />
+
+      <div
+        className={`text-sm text-red-500 text-left w-full ${errors["email"] ? "block" : "hidden"}`}
+      >
+        {errors["email"] ? <>{errors["email"]?.message}</> : null}
+      </div>
+
       <textarea
         className={`border-4 ${
           errors["title"] ? "my-3" : "my-5"
