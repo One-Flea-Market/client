@@ -1,11 +1,17 @@
 import Link from "next/link"
 import "./globals.css"
 import { Inter } from "next/font/google"
-import { useRouter } from "next/navigation"
+import CustomConfig from "@/components/customConfig"
 const inter = Inter({ subsets: ["cyrillic"] })
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let login = false
+export default async function RootLayout({
+  children,
+  params
+}: {
+  children: React.ReactNode
+  params: string
+}) {
+  let login = true
   const data = await (
     await fetch("https://jsonplaceholder.typicode.com/todos/1", { cache: "no-store" })
   ).json()
@@ -56,7 +62,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             )}
           </div>
         </header>
-        <div className="mx-5 lg:mx-36 my-16">{children}</div>
+        <div className="mx-5 lg:mx-36 my-16">
+          <CustomConfig>{children}</CustomConfig>
+        </div>
       </body>
     </html>
   )
