@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import InquiryForm from "./InquiryForm"
+import InputForm from "@/components/inputForm"
 
 export const metadata: Metadata = {
   title: "One Flea Market | Inquiry",
@@ -13,7 +13,14 @@ const Inquiry = () => {
         <h1 className="my-3 font-bold text-xl">문의하기</h1>
       </nav>
       <section>
-        <InquiryForm />
+        <InputForm
+          formArr={[
+            { type: "text", plac: "제목을 입력하세요. (최대20자)" },
+            { type: "email", plac: "email" }
+          ]}
+          anyway={{ plac: "문의 내용", value: "문의하기" }}
+          base={"/문의 작성 링크"}
+        />
       </section>
     </main>
   )

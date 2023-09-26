@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useState } from "react"
 
-const useSubmit = (url: string) => {
+const useSubmit = (base: string, after?: string) => {
   const [loading, setLoading] = useState(false)
   const valid = async (data: Record<string, string>) => {
     try {
@@ -11,10 +11,10 @@ const useSubmit = (url: string) => {
         await axios.post("https://jsonplaceholder.typicode.com/posts", { ...data })
       ).data
       console.log(res)
-      //json place holder대신 props로받은 url넣기
+      //json place holder대신 props로받은 base넣기
       // if (res.success) {
       //   alert(res.result)
-      //   window.location.replace("/")
+      //   window.location.replace(after?"/":after)
       // }
       //  else {alert(res.result); setLoading(false)}
     } catch (error) {

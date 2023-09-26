@@ -1,8 +1,9 @@
 "use client"
-import { Fragment } from "react"
+import { Fragment, useLayoutEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import useSubmit from "@/hooks/useSubmit/index"
+import useSWR from "swr"
 const UserInputComponent = ({
   settingOption,
   pageValue,
@@ -18,8 +19,14 @@ const UserInputComponent = ({
     formState: { errors }
   } = useForm()
 
+  // const {data} = useSWR('/check')
+
   const { replace, push } = useRouter()
   const { loading, valid } = useSubmit(url)
+  // useLayoutEffect(() => {
+  //  if(data && data.login) replace("/")
+
+  // }, [data])
   return (
     <form className="flex justify-center flex-col lg:flex-row" onSubmit={handleSubmit(valid)}>
       <div className="flex flex-col mt-5 [&>*]:w-[75vw] md:[&>*]:w-[45vw] [&>*]:mb-3">
@@ -37,6 +44,7 @@ const UserInputComponent = ({
                   value: 5,
                   message: "최소 5자이상 입력 해주세요."
                 },
+                maxLength: 30,
                 pattern: {
                   value:
                     item.plac === "phone-number" ? /^[0-9]+$/ : /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|@|\.]+$/,

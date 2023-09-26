@@ -108,65 +108,82 @@ function ProductList() {
       ).data
     })()
   }, [get, pathName])
-
   return (
     <>
       <section className="grid grid-cols-3 md:grid-cols-4 gap-5 pt-3 [&>*]:font-bold">
         {state.list.map(item => (
-          <Link href={`/items/${item.key}`} prefetch={false} key={item.key}>
-            <motion.article
-              whileHover={{ scale: 0.9, transition: { duration: 0.25, type: "keyframes" } }}
-              className="shadow-xl p-2 rounded-lg"
-            >
-              <Image
-                src={item.image}
-                alt={item.title}
-                width={500}
-                height={500}
-                loading="lazy"
-                className="rounded-lg"
-              />
-              <div className="flex justify-between items-center pl-2">
-                <div className="max-w-[70%]">
-                  <div className="mt-2 w-full overflow-hidden whitespace-nowrap text-ellipsis text-xxs md:text-sm">
-                    {item.title}
-                  </div>
-                  <div className="mt-1 flex [&>*]:text-xxs md:[&>*]:text-base">
-                    <div className="max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
-                      {item.price}
+          <div key={item.key} className="relative">
+            <Link href={`/items/${item.key}`} prefetch={false}>
+              <motion.article
+                whileHover={{ scale: 0.9, transition: { duration: 0.25, type: "keyframes" } }}
+                className="shadow-xl p-2 rounded-lg"
+              >
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  width={500}
+                  height={500}
+                  loading="lazy"
+                  className="rounded-lg"
+                />
+                <div className="flex justify-between items-center pl-2">
+                  <div className="max-w-[70%]">
+                    <div className="mt-2 w-full overflow-hidden whitespace-nowrap text-ellipsis text-xxs md:text-sm">
+                      {item.title}
                     </div>
-                    <span>원</span>
+                    <div className="mt-1 flex [&>*]:text-xxs md:[&>*]:text-base">
+                      <div className="max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                        {item.price}
+                      </div>
+                      <span>원</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="text-xxs md:text-base font-bold">{item.status}</div>
-              </div>
-            </motion.article>
-          </Link>
+                  <div className="text-xxs md:text-base font-bold">{item.status}</div>
+                </div>
+              </motion.article>
+            </Link>
+
+            {pathName === "/cart" ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6 absolute bg-red-500 text-white rounded-full top-3 right-3"
+                onClick={() => window.confirm("장바구니에서 삭제 하시겠습니까?")}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            ) : null}
+          </div>
         ))}
       </section>
 
-      <footer className="w-full flex justify-center mt-5">
-        {state.next && (
-          <input
-            type="button"
-            value="More &#8897;"
-            className="bg-blue-500 w-[70%] font-bold text-white text-xl rounded-xl hover:opacity-70 h-10"
-            onClick={async () => {
-              // const data = await (
-              //   await axios(
-              //     `/${pathName.slice(1, pathName.length) ? pathName.slice(1, pathName.length) : "main"}${
-              //       get("search") ? "/" + get("search") : ""
-              //     }`
-              //   )
-              // ).data
-              // setState(state=>{
-              //   return {list:[...state.list,...data.list],next:data.next}
-              // })
-            }}
-          />
-        )}
-      </footer>
+      {pathName === "/cart" || pathName === "/admin" ? null : (
+        <footer className="w-full flex justify-center mt-5">
+          {state.next && (
+            <input
+              type="button"
+              value="More &#8897;"
+              className="bg-blue-500 w-[70%] font-bold text-white text-xl rounded-xl hover:opacity-70 h-10"
+              onClick={async () => {
+                // const data = await (
+                //   await axios(
+                //     `/${pathName.slice(1, pathName.length) ? pathName.slice(1, pathName.length) : "main"}${
+                //       get("search") ? "/" + get("search") : ""
+                //     }`
+                //   )
+                // ).data
+                // setState(state=>{
+                //   return {list:[...state.list,...data.list],next:data.next}
+                // })
+              }}
+            />
+          )}
+        </footer>
+      )}
     </>
   )
 }

@@ -1,5 +1,6 @@
 import SearchEngine from "@/components/searchEngine"
 import ProductList from "@/components/productList"
+import Icon from "@/components/icon"
 const Transaction = () => {
   return (
     <main className="gird grid-cols-1 [&>*]:font-bold w-full pt-1">
@@ -8,6 +9,7 @@ const Transaction = () => {
         <SearchEngine mode="transaction" />
       </section>
       <ProductList />
+      <Icon url="/registration" />
     </main>
   )
 }

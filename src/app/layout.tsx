@@ -34,7 +34,7 @@ export default async function RootLayout({
                 { link: "rental", title: "대여" },
                 { link: "board", title: "자유 게시판" }
               ].map(item => (
-                <Link key={item.title} href={item.link} prefetch={false}>
+                <Link key={item.title} href={`/${item.link}`} prefetch={false}>
                   <span className="hover:text-blue-300">{item.title}</span>
                 </Link>
               ))}
@@ -44,7 +44,7 @@ export default async function RootLayout({
             {login ? (
               <>
                 {["admin", "log_out", "cart"].map(item => (
-                  <Link key={item} href={item} prefetch={false}>
+                  <Link key={item} href={`/${item}`} prefetch={false}>
                     <span className="hover:text-blue-300">{item}</span>
                   </Link>
                 ))}
@@ -53,7 +53,7 @@ export default async function RootLayout({
               <>
                 {["log-in", "sign-in"].map(item => (
                   <span key={item} className="hover:text-blue-300">
-                    <Link href={item} prefetch={false}>
+                    <Link href={`/${item}`} prefetch={false}>
                       {item}
                     </Link>
                   </span>

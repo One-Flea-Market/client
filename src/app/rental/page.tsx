@@ -1,5 +1,6 @@
 import ProductList from "@/components/productList"
 import SearchEngine from "@/components/searchEngine"
+import Icon from "@/components/icon"
 
 const Rental = ({ searchParams }: any) => {
   // console.log(searchParams)
@@ -10,6 +11,7 @@ const Rental = ({ searchParams }: any) => {
         <SearchEngine mode="rental" />
       </section>
       <ProductList />
+      <Icon url="/registration" />
     </main>
   )
 }
