@@ -53,10 +53,10 @@ const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } 
         </section>
         <section className="flex flex-col p-2 [&>*]:mb-5">
           <article className="border-b border-gray-300 [&>*]:mb-3">
-            <h1 className="text-3xl max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+            <h1 className="text-2xl max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
               {data.title}
             </h1>
-            <div className="max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
+            <div className="max-w-full text-lg overflow-hidden text-ellipsis whitespace-nowrap">
               가격: {data.price}
             </div>
           </article>
