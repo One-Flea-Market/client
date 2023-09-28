@@ -15,13 +15,17 @@ const BoardDetail = async ({ params: { board_id } }: { params: { board_id: strin
   return (
     <main className="[&>*]:font-bold">
       <section className="flex w-full justify-between items-center border-b border-b-gray-400">
-        <h1 className="text-lg mb-2">{data.title}</h1>
-        <article className="pb-2">
-          <div className="text-sm">작성자: {data.user}</div>
-          <div className="text-sm">날짜: {data.date}</div>
+        <h1 className="text-lg mb-2 max-w-[80%] overflow-hidden text-ellipsis whitespace-nowrap ">
+          {data.title}
+        </h1>
+        <article className="pb-2 [&>*]:text-sm [&>*]:w-[10em] [&>*]:overflow-hidden [&>*]:text-ellipsis [&>*]:whitespace-nowrap">
+          <div>작성자: {data.user}</div>
+          <div>날짜: {data.date}</div>
         </article>
       </section>
-      <section className="border-b border-b-gray-400 min-h-[50vh] py-3">{data.text}</section>
+      <section className="border-b border-b-gray-400 min-h-[50vh] py-3 break-all">
+        {data.text}
+      </section>
       <footer className="flex  flex-col w-full">
         <div className="flex w-full items-baseline justify-between px-1">
           <h3 className="my-2 text-lg">댓글</h3>

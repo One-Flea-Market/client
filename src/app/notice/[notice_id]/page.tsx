@@ -12,10 +12,14 @@ const NoticeDetail = async ({ params: { notice_id } }: { params: { notice_id: st
   return (
     <main className="[&>*]:font-bold">
       <section className="flex w-full justify-between items-baseline pb-2 border-b border-b-gray-400">
-        <h1 className="text-xl mb-1">{data.title}</h1>
+        <h1 className="text-xl mb-1 max-w-[80%] overflow-hidden text-ellipsis whitespace-nowrap">
+          {data.title}
+        </h1>
         <div className="text-sm">날짜: {data.date}</div>
       </section>
-      <section className="border-b border-b-gray-400 min-h-[70vh] py-3">{data.text}</section>
+      <section className="border-b border-b-gray-400 min-h-[70vh] py-3 break-all">
+        {data.text}
+      </section>
       <footer className="flex justify-center w-full">
         <Link
           href="/"

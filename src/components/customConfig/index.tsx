@@ -6,7 +6,7 @@ import { SWRConfig } from "swr"
 const CustomConfig = ({ children }: { children: ReactNode }) => {
   return (
     <SWRConfig value={{ fetcher: async (url: string) => await (await axios(url)).data }}>
-      {children}
+      <main className="[&>*]:font-bold">{children}</main>
     </SWRConfig>
   )
 }
