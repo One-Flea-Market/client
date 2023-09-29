@@ -2,6 +2,7 @@
 import { Fragment } from "react"
 import { useForm } from "react-hook-form"
 import useSubmit from "@/hooks/useSubmit/index"
+import useMovement from "@/hooks/useMovement"
 const InputForm = ({
   formArr,
   anyway,
@@ -19,6 +20,7 @@ const InputForm = ({
     formState: { errors }
   } = useForm()
   const { loading, valid } = useSubmit(base, after)
+  useMovement()
   return (
     <form
       onSubmit={handleSubmit(valid)}
@@ -29,6 +31,7 @@ const InputForm = ({
           <input
             type={item.type}
             placeholder={item.plac}
+            defaultValue={item.defv}
             className={`border-4 ${item.type === "email" && "mt-2"} ${
               errors[item.type] ? "border-red-300" : "border-blue-300"
             } h-14 w-full`}
@@ -53,11 +56,13 @@ const InputForm = ({
 
       <textarea
         className="border-4 my-3 border-blue-300 h-72 resize-none w-full"
+        defaultValue={anyway.defv}
         placeholder={anyway.plac}
         {...(register("body"), { minLength: 10, required: true })}
       />
       <input
         type="submit"
+        id="for_submit"
         value={anyway.value}
         className="bg-blue-600 text-white cursor-pointer w-[20%] md:w-[10%] hover:opacity-70 text-xs md:text-base"
         disabled={loading}

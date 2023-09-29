@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import useSubmit from "@/hooks/useSubmit/index"
 import useSWR from "swr"
+import useMovement from "@/hooks/useMovement"
 const UserInputComponent = ({
   settingOption,
   pageValue,
@@ -22,11 +23,12 @@ const UserInputComponent = ({
   // const {data} = useSWR('/check')
 
   const { replace, push } = useRouter()
-  const { loading, valid } = useSubmit(url)
+  const { loading, valid } = useSubmit({ base: url })
   // useLayoutEffect(() => {
   //  if(data && data.login) replace("/")
 
   // }, [data])
+  useMovement()
   return (
     <form className="flex justify-center flex-col lg:flex-row" onSubmit={handleSubmit(valid)}>
       <div className="flex flex-col mt-5 [&>*]:w-[75vw] md:[&>*]:w-[45vw] [&>*]:mb-3">
