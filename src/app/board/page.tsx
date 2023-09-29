@@ -4,7 +4,7 @@ import Link from "next/link"
 
 const Board = () => {
   const res = {
-    notice: [
+    board: [
       { title: "게시글0", date: "9999-99-99", id: "v0" },
       { title: "게시글1", date: "9999-99-99", id: "v1" },
       { title: "게시글2", date: "9999-99-99", id: "v2" },
@@ -27,7 +27,7 @@ const Board = () => {
       </section>
 
       <section className="flex flex-col min-h-[27rem]">
-        {res.notice.map((item, index) => (
+        {res.board.map((item, index) => (
           <Link key={item.id} href={`/board/${item.id}`} prefetch={false}>
             <article className="flex w-full justify-between py-2 items-baseline border-b border-gray-300 hover:bg-gray-100">
               <div className="w-[80%] overflow-hidden text-ellipsis whitespace-nowrap  text-base md:text-lg">

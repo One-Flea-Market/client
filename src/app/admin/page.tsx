@@ -10,7 +10,7 @@ const Admin = async () => {
 
   return (
     <main className="[&>*]:font-bold">
-      <h1 className="text-xl">my page</h1>
+      <h1 className="text-3xl">My page</h1>
       <section className="flex w-full mb-4 bg-gray-100 my-4 p-5 [&>*]:mx-3 rounded-lg h-44 justify-center items-center">
         <div className="">
           <svg

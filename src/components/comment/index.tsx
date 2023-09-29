@@ -6,11 +6,11 @@ import { useForm } from "react-hook-form"
 import useSWR from "swr"
 
 const data = [
-  { username: "유저5", text: "지리네요", date: "9999-99-99", id: "v1", oneself: false },
-  { username: "유저3", text: "good!", date: "9999-99-99", id: "v2", oneself: false },
-  { username: "유저2", text: "감사합니다.", date: "9999-99-99", id: "v3", oneself: false },
-  { username: "유저4", text: "빨리 합시다.", date: "9999-99-99", id: "v4", oneself: false },
-  { username: "유저1", text: "radio gaga", date: "9999-99-99", id: "v5", oneself: true }
+  { username: "유저5", body: "지리네요", date: "9999-99-99", id: "v1", oneself: false },
+  { username: "유저3", body: "good!", date: "9999-99-99", id: "v2", oneself: false },
+  { username: "유저2", body: "감사합니다.", date: "9999-99-99", id: "v3", oneself: false },
+  { username: "유저4", body: "빨리 합시다.", date: "9999-99-99", id: "v4", oneself: false },
+  { username: "유저1", body: "radio gaga", date: "9999-99-99", id: "v5", oneself: true }
 ]
 
 const Comment = () => {
@@ -56,13 +56,13 @@ const Comment = () => {
               <div className=" flex w-[80%] max-w-[80%] break-words justify-end items-center">
                 &rarr;
                 {state[item.id] && state[item.id]["modify"] ? (
-                  <div className="my-1 text-base w-[95%]">&nbsp;{item.text}</div>
+                  <div className="my-1 text-base w-[95%]">&nbsp;{item.body}</div>
                 ) : (
                   <>
                     &nbsp;
                     <input
                       type="text"
-                      defaultValue={item.text}
+                      defaultValue={item.body}
                       className=" my-1 text-base w-[95%] p-2 outline-none border-4 border-blue-300 rounded-lg"
                       onBlur={e =>
                         setState(state => ({
@@ -118,7 +118,13 @@ const Comment = () => {
                       //   ],
                       //   false
                       // )
-                      await axios.patch("/게시글/수정", { change })
+                      const res = await (
+                        await axios.patch("https://jsonplaceholder.typicode.com/posts/1", {
+                          change
+                        })
+                      ).data
+                      console.log({ res, change, exclude })
+                      //url 변경
                       setState(state => ({
                         ...state,
                         [item.id]: { ...state[item.id], modify: !state[item.id]["modify"] }

@@ -6,7 +6,7 @@ const NoticeDetail = async ({ params: { notice_id } }: { params: { notice_id: st
   const data = {
     title: "공지사항9",
     date: "9999-99-99",
-    text: "원플리마켓 거래 규칙입니다.",
+    body: "원플리마켓 거래 규칙입니다.",
     id: "v9"
   }
   return (
@@ -18,7 +18,7 @@ const NoticeDetail = async ({ params: { notice_id } }: { params: { notice_id: st
         <div className="text-sm">날짜: {data.date}</div>
       </section>
       <section className="border-b border-b-gray-400 min-h-[70vh] py-3 break-all">
-        {data.text}
+        {data.body}
       </section>
       <footer className="flex justify-center w-full">
         <Link

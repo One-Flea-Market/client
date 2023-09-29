@@ -7,19 +7,21 @@ const InputForm = ({
   formArr,
   anyway,
   base,
-  after
+  after,
+  type
 }: {
   formArr: Record<string, string>[]
   anyway: Record<string, string>
   base: string
   after?: string
+  type?: "post" | "patch"
 }) => {
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm()
-  const { loading, valid } = useSubmit(base, after)
+  const { loading, valid } = useSubmit({ base, after, type })
   useMovement()
   return (
     <form
@@ -35,7 +37,7 @@ const InputForm = ({
             className={`border-4 ${item.type === "email" && "mt-2"} ${
               errors[item.type] ? "border-red-300" : "border-blue-300"
             } h-14 w-full`}
-            {...register(item.type, {
+            {...register(item.id, {
               minLength: { value: 5, message: "5자 이상 입력 하세요." },
               maxLength:
                 item.type === "text"
@@ -58,7 +60,7 @@ const InputForm = ({
         className="border-4 my-3 border-blue-300 h-72 resize-none w-full"
         defaultValue={anyway.defv}
         placeholder={anyway.plac}
-        {...(register("body"), { minLength: 10, required: true })}
+        {...register("body", { minLength: 10, required: true })}
       />
       <input
         type="submit"

@@ -8,7 +8,7 @@ const Writing = () => {
       </nav>
       <section>
         <InputForm
-          formArr={[{ type: "text", plac: "제목을 입력하세요. (최대20자)" }]}
+          formArr={[{ type: "text", plac: "제목을 입력하세요. (최대20자)", id: "title" }]}
           anyway={{ plac: "게시글 내용", value: "작성하기" }}
           base={"/게시글 작성 링크"}
           after="/board"
@@ -17,5 +17,5 @@ const Writing = () => {
     </main>
   )
 }
-
+//날짜 추가
 export default Writing

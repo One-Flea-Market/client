@@ -11,10 +11,10 @@ const BoardDetail = ({ params: { board_id } }: { params: { board_id: string } })
   const data = {
     title: "게시글9",
     date: "9999-99-99",
-    text: "게시글 입니다.",
+    body: "게시글 입니다.",
     user: "유저1",
     id: "v9",
-    ondeself: true
+    oneself: true
   }
 
   const [state, setState] = useState(false)
@@ -23,11 +23,15 @@ const BoardDetail = ({ params: { board_id } }: { params: { board_id: string } })
       {state ? (
         <>
           <InputForm
-            formArr={[{ type: "text", plac: "제목을 입력하세요. (최대20자)", defv: data.title }]}
-            anyway={{ plac: "게시글 내용", value: "수정 하기", defv: data.text }}
+            formArr={[
+              { type: "text", plac: "제목을 입력하세요. (최대20자)", defv: data.title, id: "title" }
+            ]}
+            anyway={{ plac: "게시글 내용", value: "수정 하기", defv: data.body }}
             base={"/게시글id"}
             after="/board"
+            type="patch"
           />
+          {/* 컴포넌트 안에서 날짜및 링크 수정하기 */}
         </>
       ) : (
         <>
@@ -41,12 +45,12 @@ const BoardDetail = ({ params: { board_id } }: { params: { board_id: string } })
             </article>
           </section>
           <section className="border-b border-b-gray-400 min-h-[50vh] py-3 break-all">
-            {data.text}
+            {data.body}
           </section>
           <footer className="flex  flex-col w-full">
             <div className="flex w-full items-baseline justify-between px-1">
               <h3 className="my-2 text-lg">댓글</h3>
-              {data.ondeself ? (
+              {data.oneself ? (
                 <div className="flex [&>*]:text-sm">
                   {["수정", "삭제"].map(item => (
                     <div

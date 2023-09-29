@@ -15,7 +15,7 @@ const Inquiry = () => {
       <section>
         <InputForm
           formArr={[
-            { type: "text", plac: "제목을 입력하세요. (최대20자)" },
+            { type: "text", plac: "제목을 입력하세요. (최대20자)", id: "title" },
             { type: "email", plac: "email" }
           ]}
           anyway={{ plac: "문의 내용", value: "문의하기" }}

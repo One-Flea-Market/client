@@ -4,94 +4,97 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { useSearchParams, usePathname } from "next/navigation"
 import { useLayoutEffect, useState } from "react"
+import useSWR from "swr"
 import axios from "axios"
 function ProductList() {
+  //url 받기
   const { get } = useSearchParams()
   const pathName = usePathname()
+  // const { data, mutate } = useSWR("")
   const [state, setState] = useState({
     list: [
       {
         image: "https://media.bunjang.co.kr/product/236599254_1_1695023021_w856.jpg",
         price: "500000",
         title: "아이패드",
-        key: "product1",
+        id: "product1",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/230731027_1_1690016812_w856.jpg",
         price: "50000",
         title: "향수",
-        key: "product2",
+        id: "product2",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/234655399_1_1694177830_w856.jpg",
         price: "99000",
         title: "나이키 신발1",
-        key: "product3",
+        id: "product3",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/235421896_1_1694528121_w856.jpg",
         price: "99000",
         title: "나이키 신발2",
-        key: "product4",
+        id: "product4",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/213028551_1_1675003109_w856.jpg",
         price: "500000",
         title: "나이키 신발3",
-        key: "product5",
+        id: "product5",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/236756069_1_1695030007_w856.jpg",
         price: "260000",
         title: "에어팟",
-        key: "product6",
+        id: "product6",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/236375090_1_1695009443_w856.jpg",
         price: "300000",
         title: "지갑1",
-        key: "product7",
+        id: "product7",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/226960553_1_1695029262_w856.jpg",
         price: "700000",
         title: "지갑2",
-        key: "product8",
+        id: "product8",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/233776797_1_1694610185_w856.jpg",
         price: "350000",
         title: "바람 막이",
-        key: "product9",
+        id: "product9",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/236455404_1_1694776916_w856.jpg",
         price: "500000",
         title: "가디건",
-        key: "product10",
+        id: "product10",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/229499051_1_1689041967_w856.jpg",
         price: "290000",
         title: "기타",
-        key: "product11",
+        id: "product11",
         status: "거래"
       },
       {
         image: "https://media.bunjang.co.kr/product/229804329_1_1692870733_w856.jpg",
         price: "330000",
         title: "피아노",
-        key: "product12",
+        id: "product12",
         status: "거래"
       }
     ],
@@ -112,8 +115,8 @@ function ProductList() {
     <>
       <section className="grid grid-cols-3 md:grid-cols-4 gap-5 pt-3 [&>*]:font-bold">
         {state.list.map(item => (
-          <div key={item.key} className="relative">
-            <Link href={`/items/${item.key}`} prefetch={false}>
+          <div key={item.id} className="relative">
+            <Link href={`/items/${item.id}`} prefetch={false}>
               <motion.article
                 whileHover={{ scale: 0.9, transition: { duration: 0.25, type: "keyframes" } }}
                 className="shadow-xl p-2 rounded-lg"
@@ -152,7 +155,17 @@ function ProductList() {
                 strokeWidth={2}
                 stroke="currentColor"
                 className="w-6 h-6 absolute bg-red-500 text-white rounded-full top-3 right-3"
-                onClick={() => window.confirm("장바구니에서 삭제 하시겠습니까?")}
+                onClick={async () => {
+                  // if (
+                  window.confirm("장바구니에서 삭제 하시겠습니까?")
+                  // ) {
+                  // mutate(
+                  //   (state: any) => state.filter((fitem: any) => fitem.id !== item.id),
+                  //   false
+                  // )
+                  // }
+                  // await axios.delete(`/cart/${item.id}`)
+                }}
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
