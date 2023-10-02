@@ -4,19 +4,12 @@ import { Inter } from "next/font/google"
 import CustomConfig from "@/components/customConfig"
 const inter = Inter({ subsets: ["cyrillic"] })
 
-export default async function RootLayout({
-  children,
-  params
-}: {
-  children: React.ReactNode
-  params: string
-}) {
-  let login = false
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  let login = true
   const data = await (
     await fetch("https://jsonplaceholder.typicode.com/todos/1", { cache: "no-store" })
   ).json()
   //json place holder => "/check"
-  // console.log(data)
   return (
     <html lang="ko">
       <body className={inter.className}>

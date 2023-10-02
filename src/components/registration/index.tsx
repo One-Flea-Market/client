@@ -4,11 +4,13 @@ import Image from "next/image"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { motion } from "framer-motion"
-function Registration({ title, imgArr = [], subTitle, price, text, status, current }: any) {
-  const [state, setState] = useState<string[]>([...imgArr])
-  const [stus, setStus] = useState(current)
+import useMovement from "@/hooks/useMovement"
+function Registration({ title, imgArr = [], subTitle, price, text, value, current }: any) {
+  const [imageList, setImageList] = useState<string[]>([...imgArr])
+  const [status, setStatus] = useState(current)
   const { register, handleSubmit } = useForm()
-  const { loading, valid } = useSubmit({ base: "", more: { state, stus } })
+  const { loading, valid } = useSubmit({ base: "", more: { imageList, status } })
+  useMovement()
   return (
     <section>
       <nav>
@@ -16,12 +18,12 @@ function Registration({ title, imgArr = [], subTitle, price, text, status, curre
       </nav>
       <article
         className={`grid ${
-          state.length ? "grid-cols-3 md:grid-cols-4" : "grid-cols-1"
+          imageList.length ? "grid-cols-3 md:grid-cols-4" : "grid-cols-1"
         } gap-3 border-dotted border-4 border-blue-300 p-2 rounded-lg min-h-[55vh]  max-h-[120vh]`}
       >
-        {state.length ? (
+        {imageList.length ? (
           <>
-            {state.map((item, index) => (
+            {imageList.map((item, index) => (
               <div key={item} className="w-full h-[25vh] relative">
                 <Image
                   src={item}
@@ -34,7 +36,7 @@ function Registration({ title, imgArr = [], subTitle, price, text, status, curre
                 <input
                   type="button"
                   value="x"
-                  onClick={() => setState(state => state.filter((_, id) => id !== index))}
+                  onClick={() => setImageList(state => state.filter((_, id) => id !== index))}
                   className="absolute right-1 top-1 bg-red-600 text-white text-base rounded-full w-8 h-8 hover:text-black"
                 />
               </div>
@@ -53,15 +55,17 @@ function Registration({ title, imgArr = [], subTitle, price, text, status, curre
           onChange={(event: any) => {
             const target = event.target
             const imageLists = target.files
-            let imageUrlLists: string[] = [...state]
+            let imageUrlLists: string[] = [...imageList]
             for (let i = 0; i < imageLists.length; i++)
               imageUrlLists.push(URL.createObjectURL(imageLists[i]))
             if (imageUrlLists.length > 12) imageUrlLists = imageUrlLists.slice(0, 12)
-            setState(imageUrlLists)
+            setImageList(imageUrlLists)
           }}
         >
           <input type="file" id="input-file" multiple className="hidden" />
-          {state.length < 12 && <div className="my-3 text-center text-lg">사진 추가</div>}
+          {imageList.length < 12 && (
+            <div className="my-3 text-center text-lg hover:text-blue-300">사진 추가</div>
+          )}
         </label>
       </article>
 
@@ -95,8 +99,8 @@ function Registration({ title, imgArr = [], subTitle, price, text, status, curre
                 whileHover={{ scale: 0.9, transition: { duration: 0.3 } }}
                 value={item}
                 key={item}
-                onClick={e => setStus(e.currentTarget.value)}
-                className={`${stus === item ? "bg-blue-300 text-white" : null}`}
+                onClick={e => setStatus(e.currentTarget.value)}
+                className={`${status === item ? "bg-blue-300 text-white" : null}`}
               />
             ))}
           </div>
@@ -113,7 +117,7 @@ function Registration({ title, imgArr = [], subTitle, price, text, status, curre
             <input
               type="submit"
               disabled={loading}
-              value={status}
+              value={value}
               className="border-none w-[50%] h-[3rem] bg-blue-500 text-white hover:opacity-70 rounded-lg"
             />
           </div>

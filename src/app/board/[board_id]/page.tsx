@@ -1,7 +1,9 @@
 "use client"
+
 import Comment from "@/components/comment"
 import axios from "axios"
 import dynamic from "next/dynamic"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import useSWR from "swr"
 const InputForm = dynamic(() => import("@/components/inputForm"))
@@ -18,6 +20,7 @@ const BoardDetail = ({ params: { board_id } }: { params: { board_id: string } })
   }
 
   const [state, setState] = useState(false)
+  const { replace, refresh } = useRouter()
   return (
     <main className="[&>*]:font-bold">
       {state ? (
@@ -27,11 +30,10 @@ const BoardDetail = ({ params: { board_id } }: { params: { board_id: string } })
               { type: "text", plac: "제목을 입력하세요. (최대20자)", defv: data.title, id: "title" }
             ]}
             anyway={{ plac: "게시글 내용", value: "수정 하기", defv: data.body }}
-            base={"/게시글id"}
+            base={`/board/${board_id}/modify `}
             after="/board"
             type="patch"
           />
-          {/* 컴포넌트 안에서 날짜및 링크 수정하기 */}
         </>
       ) : (
         <>
@@ -57,10 +59,17 @@ const BoardDetail = ({ params: { board_id } }: { params: { board_id: string } })
                       key={item}
                       className="mx-1 hover:text-blue-300 cursor-pointer"
                       onClick={async () => {
-                        if (item === "수정") setState(state => !state)
-                        else {
-                          if (window.confirm("게시물을 삭제하시겠습니까?"))
-                            await axios.delete("/board/id")
+                        if (item === "수정") {
+                          setState(state => !state)
+                        } else {
+                          if (window.confirm("게시물을 삭제하시겠습니까?")) {
+                            const { result, message } = await (await axios.delete("/board/id")).data
+                            if (result) replace("/board")
+                            else {
+                              alert(message)
+                              refresh()
+                            }
+                          }
                         }
                       }}
                     >
@@ -70,7 +79,7 @@ const BoardDetail = ({ params: { board_id } }: { params: { board_id: string } })
                 </div>
               ) : null}
             </div>
-            <Comment />
+            <Comment url={`/board/${board_id}/comment `} />
           </footer>
         </>
       )}

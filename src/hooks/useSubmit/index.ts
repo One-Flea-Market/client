@@ -5,31 +5,33 @@ interface submitData {
   base: string
   after?: string
   more?: any
-  type?: "post" | "patch"
+  type?: "post" | "patch" | "delete" | "put"
 }
 
 const useSubmit = ({ base, after, more, type = "post" }: submitData) => {
+  const time = new Date()
   const [loading, setLoading] = useState(false)
   const valid = async (data: Record<string, string>) => {
+    const moudule = {
+      ...data,
+      ...more,
+      date: `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`
+    }
+    if (base === "/login") delete moudule["date"]
     try {
-      // throw new Error("error")
       setLoading(true)
       const res = await (
         await axios[type](
           type === "post"
             ? "https://jsonplaceholder.typicode.com/posts"
             : "https://jsonplaceholder.typicode.com/posts/1",
-          {
-            ...data,
-            ...[more]
-          }
+          moudule
         )
       ).data
       // 추가 데이터있을떄 결과값 확인하기
       console.log(res)
       //json place holder대신 props로받은 base넣기
       // if (res.result) {
-      //   res.message && alert("res.message")
       //   window.location.replace(after?"/":after)
       // }
       //  else {

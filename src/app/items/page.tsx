@@ -5,7 +5,7 @@ const Items = () => {
   return (
     <section>
       <h1 className="text-3xl my-2">모든 상품</h1>
-      <ProductList />
+      <ProductList link="/items" />
       <footer>
         <Icon url="/registration" />
       </footer>

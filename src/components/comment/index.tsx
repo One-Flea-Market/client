@@ -1,6 +1,7 @@
 "use client"
 import useSubmit from "@/hooks/useSubmit"
 import axios from "axios"
+import { useParams } from "next/navigation"
 import { useLayoutEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import useSWR from "swr"
@@ -13,23 +14,29 @@ const data = [
   { username: "유저1", body: "radio gaga", date: "9999-99-99", id: "v5", oneself: true }
 ]
 
-const Comment = () => {
+const Comment = ({ url }: { url: string }) => {
+  const time = new Date()
+  const params = useParams()
   const { register, handleSubmit } = useForm()
-  // const { data, mutate } = useSWR("/게시글id/댓글 가져오기 링크")
-  const { loading, valid } = useSubmit({ base: "/게시글id/댓글 작성 링크" })
+  // const { data, mutate } = useSWR(url)
+  const { loading, valid } = useSubmit({
+    base: `/board/${params}/comment/new`,
+    more: `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`
+  })
   const [state, setState] = useState<Record<string, Record<string, boolean | string>>>({})
   useLayoutEffect(() => {
     data.map(item => {
-      setState(state => ({ ...state, [item.id]: { modify: true, text: "" } }))
+      if (item.oneself) {
+        setState(state => ({ ...state, [item.id]: { modify: true, text: "" } }))
+      }
     })
   }, [])
-  //로직 변경
   return (
     <section>
       <form onSubmit={handleSubmit(valid)} className="flex">
         <textarea
           className="resize-none border-4 border-blue-300 w-[85%] md:w-[90%] rounded-lg p-2 outline-none"
-          {...register("comment text", {
+          {...register("body", {
             required: true,
             minLength: 5
           })}
@@ -55,7 +62,9 @@ const Comment = () => {
             <div className="flex justify-between items-baseline">
               <div className=" flex w-[80%] max-w-[80%] break-words justify-end items-center">
                 &rarr;
-                {state[item.id] && state[item.id]["modify"] ? (
+                {state[item.id] === undefined ? (
+                  <div className="my-1 text-base w-[95%]">&nbsp;{item.body}</div>
+                ) : state[item.id]["modify"] ? (
                   <div className="my-1 text-base w-[95%]">&nbsp;{item.body}</div>
                 ) : (
                   <>
@@ -64,7 +73,7 @@ const Comment = () => {
                       type="text"
                       defaultValue={item.body}
                       className=" my-1 text-base w-[95%] p-2 outline-none border-4 border-blue-300 rounded-lg"
-                      onBlur={e =>
+                      onBlur={() =>
                         setState(state => ({
                           ...state,
                           [item.id]: { ...state[item.id], text: !state[item.id]["text"] }
@@ -74,22 +83,26 @@ const Comment = () => {
                   </>
                 )}
               </div>
-              {state[item.id] && item.oneself ? (
-                state[item.id]["modify"] ? (
+              {item.oneself ? (
+                state[item.id] && state[item.id]["modify"] ? (
                   <div className="flex [&>*]:text-sm">
                     {["수정", "삭제"].map(str => (
                       <div
                         key={str}
                         onClick={async () => {
-                          console.log(state[item.id]["modify"])
                           if (str === "수정")
                             setState(state => ({
                               ...state,
                               [item.id]: { ...state[item.id], modify: !state[item.id]["modify"] }
                             }))
                           else {
-                            if (window.confirm(`댓글을 ${str} 하시겠습니까?`))
-                              await axios.delete("/게시글/댓글/id")
+                            if (window.confirm(`댓글을 ${str} 하시겠습니까?`)) {
+                              const { result, message } = await (
+                                await axios.delete(`/board/${params}/comment/${item.id}/delete `)
+                              ).data
+                              // if(result)mutate(data=>data.filter(fitem => fitem.id !== item.id),false)
+                              // else alert(message)
+                            }
                           }
                         }}
                         className="mx-1 hover:text-blue-300 cursor-pointer"
@@ -105,8 +118,7 @@ const Comment = () => {
                     className="mx-1 hover:text-blue-300 cursor-pointer text-sm"
                     onClick={async () => {
                       const change = data.find(fitem => fitem === item),
-                        exclude = data.filter(fitem => fitem !== item),
-                        time = new Date()
+                        exclude = data.filter(fitem => fitem !== item)
                       // mutate(
                       //   [
                       //     {
@@ -118,17 +130,17 @@ const Comment = () => {
                       //   ],
                       //   false
                       // )
-                      const res = await (
-                        await axios.patch("https://jsonplaceholder.typicode.com/posts/1", {
+                      const { result, message } = await (
+                        await axios.patch(`/board/${params}/comment/${item.id}/modify `, {
                           change
                         })
                       ).data
-                      console.log({ res, change, exclude })
-                      //url 변경
-                      setState(state => ({
-                        ...state,
-                        [item.id]: { ...state[item.id], modify: !state[item.id]["modify"] }
-                      }))
+                      if (result)
+                        setState(state => ({
+                          ...state,
+                          [item.id]: { ...state[item.id], modify: !state[item.id]["modify"] }
+                        }))
+                      else alert(message)
                     }}
                   />
                 )

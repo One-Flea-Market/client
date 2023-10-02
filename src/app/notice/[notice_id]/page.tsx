@@ -1,7 +1,7 @@
 import Link from "next/link"
 const NoticeDetail = async ({ params: { notice_id } }: { params: { notice_id: string } }) => {
   // const data = await (
-  //   await fetch(`/api링크/${notice_id}`, { cache: "no-store" })
+  //   await fetch(`/notice/${notice_id} `, { cache: "no-store" })
   // ).json()
   const data = {
     title: "공지사항9",

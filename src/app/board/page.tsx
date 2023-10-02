@@ -1,10 +1,13 @@
+"use client"
 import Icon from "@/components/icon"
 import SearchEngine from "@/components/searchEngine"
+import useMore from "@/hooks/useMore"
 import Link from "next/link"
 
-const Board = () => {
+const Board = ({ searchParams: { search } }: { searchParams: { search: string } }) => {
+  // const res = await(await fetch(search?`/board/search/${search}`:"/board",{cache:'no-store'})).json()
   const res = {
-    board: [
+    list: [
       { title: "게시글0", date: "9999-99-99", id: "v0" },
       { title: "게시글1", date: "9999-99-99", id: "v1" },
       { title: "게시글2", date: "9999-99-99", id: "v2" },
@@ -19,6 +22,8 @@ const Board = () => {
     next: true
   }
 
+  // const {state,setState,better} = useMore({link:search?`/board/search/${search}`:"/board"})
+
   return (
     <main className="gird grid-cols-1 [&>*]:font-bold w-full pt-1">
       <section className="flex w-full justify-between mb-3 ">
@@ -27,7 +32,7 @@ const Board = () => {
       </section>
 
       <section className="flex flex-col min-h-[27rem]">
-        {res.board.map((item, index) => (
+        {res.list.map((item, index) => (
           <Link key={item.id} href={`/board/${item.id}`} prefetch={false}>
             <article className="flex w-full justify-between py-2 items-baseline border-b border-gray-300 hover:bg-gray-100">
               <div className="w-[80%] overflow-hidden text-ellipsis whitespace-nowrap  text-base md:text-lg">
@@ -45,6 +50,7 @@ const Board = () => {
             type="button"
             value="More &#8897;"
             className="bg-blue-500 w-[80%] ml-2 text-xl h-10 rounded-xl hover:opacity-70 font-bold text-white"
+            // onClick={better}
           />
         )}
       </footer>

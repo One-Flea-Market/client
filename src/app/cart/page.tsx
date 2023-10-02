@@ -4,7 +4,7 @@ const Cart = () => {
   return (
     <main className="[&>*]:font-bold">
       <h1 className="text-xl">Cart</h1>
-      <ProductList />
+      <ProductList url="/cart" />
     </main>
   )
 }

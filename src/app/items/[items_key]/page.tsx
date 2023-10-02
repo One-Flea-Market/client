@@ -15,7 +15,7 @@ const Registration = dynamic(() => import("@/components/registration"))
 const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } }) => {
   const data = {
     id: items_key,
-    picture: [
+    imageList: [
       "https://media.bunjang.co.kr/images/nocrop/1039348912_w1197.jpg",
       "https://media.bunjang.co.kr/images/nocrop/1040164730_w1197.jpg",
       "https://media.bunjang.co.kr/images/nocrop/1036285342_w1197.jpg",
@@ -48,7 +48,7 @@ const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } 
                 pagination={{ clickable: true }}
                 navigation={true}
               >
-                {data.picture.map(item => (
+                {data.imageList.map(item => (
                   <SwiperSlide key={item} className="w-full [&>*]:w-full [&>*]:h-full ">
                     <Image
                       src={item}
@@ -137,11 +137,11 @@ const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } 
       ) : (
         <Registration
           title={"상품 수정"}
-          imgArr={data.picture}
+          imgArr={data.imageList}
           subTitle={data.title}
           price={data.price}
           text={data.body}
-          status={"수정하기"}
+          value={"수정하기"}
           current={data.status}
         />
       )}

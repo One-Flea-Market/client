@@ -1,11 +1,11 @@
 "use clent"
 import { useEffect } from "react"
-const useMovement = () => {
-  const preventClose = (e: BeforeUnloadEvent) => {
-    e.preventDefault()
-    e.returnValue = "" //Chrome에서 동작하도록; deprecated
-  }
+const preventClose = (e: BeforeUnloadEvent) => {
+  e.preventDefault()
+  e.returnValue = "" //Chrome에서 동작하도록; deprecated
+}
 
+const useMovement = () => {
   //   const preventGoBack = () => {
   //     history.pushState(null, "", location.href)
   //   }

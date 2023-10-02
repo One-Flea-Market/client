@@ -2,15 +2,12 @@
 import Image from "next/image"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { useSearchParams, usePathname } from "next/navigation"
-import { useLayoutEffect, useState } from "react"
-import useSWR from "swr"
+import { usePathname } from "next/navigation"
+import { useState } from "react"
 import axios from "axios"
-function ProductList() {
-  //url 받기
-  const { get } = useSearchParams()
+import useMore from "@/hooks/useMore"
+function ProductList({ link }: { link: string }) {
   const pathName = usePathname()
-  // const { data, mutate } = useSWR("")
   const [state, setState] = useState({
     list: [
       {
@@ -100,17 +97,7 @@ function ProductList() {
     ],
     next: true
   })
-  useLayoutEffect(() => {
-    void (async () => {
-      await (
-        await axios(
-          `/${pathName.slice(1, pathName.length) ? pathName.slice(1, pathName.length) : "main"}${
-            get("search") ? "/" + get("search") : ""
-          }`
-        )
-      ).data
-    })()
-  }, [get, pathName])
+  // const {state,setState,better ,filter} = useMore({ link })
   return (
     <>
       <section className="grid grid-cols-3 md:grid-cols-4 gap-5 pt-3 [&>*]:font-bold">
@@ -158,13 +145,9 @@ function ProductList() {
                 onClick={async () => {
                   // if (
                   window.confirm("장바구니에서 삭제 하시겠습니까?")
-                  // ) {
-                  // mutate(
-                  //   (state: any) => state.filter((fitem: any) => fitem.id !== item.id),
-                  //   false
-                  // )
-                  // }
-                  // await axios.delete(`/cart/${item.id}`)
+                  // ) filter(item.id)
+                  //const {result , message} = await(await axios.delete(`/cart/${item.id}`)).data
+                  // if(!result) alert(message)
                 }}
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -174,29 +157,16 @@ function ProductList() {
         ))}
       </section>
 
-      {pathName === "/cart" || pathName === "/admin" ? null : (
-        <footer className="w-full flex justify-center mt-5">
-          {state.next && (
-            <input
-              type="button"
-              value="More &#8897;"
-              className="bg-blue-500 w-[70%] font-bold text-white text-xl rounded-xl hover:opacity-70 h-10"
-              onClick={async () => {
-                // const data = await (
-                //   await axios(
-                //     `/${pathName.slice(1, pathName.length) ? pathName.slice(1, pathName.length) : "main"}${
-                //       get("search") ? "/" + get("search") : ""
-                //     }`
-                //   )
-                // ).data
-                // setState(state=>{
-                //   return {list:[...state.list,...data.list],next:data.next}
-                // })
-              }}
-            />
-          )}
-        </footer>
-      )}
+      <footer className="w-full flex justify-center mt-5">
+        {state.next && (
+          <input
+            type="button"
+            value="More &#8897;"
+            className="bg-blue-500 w-[70%] font-bold text-white text-xl rounded-xl hover:opacity-70 h-10"
+            // onClick={better}
+          />
+        )}
+      </footer>
     </>
   )
 }

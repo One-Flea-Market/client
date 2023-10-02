@@ -14,7 +14,7 @@ const InputForm = ({
   anyway: Record<string, string>
   base: string
   after?: string
-  type?: "post" | "patch"
+  type?: "post" | "patch" | "delete"
 }) => {
   const {
     register,
@@ -34,8 +34,8 @@ const InputForm = ({
             type={item.type}
             placeholder={item.plac}
             defaultValue={item.defv}
-            className={`border-4 ${item.type === "email" && "mt-2"} ${
-              errors[item.type] ? "border-red-300" : "border-blue-300"
+            className={`border-4 ${item.id === "email" && "mt-2"} ${
+              errors[item.id] ? "border-red-300" : "border-blue-300"
             } h-14 w-full`}
             {...register(item.id, {
               minLength: { value: 5, message: "5자 이상 입력 하세요." },
@@ -48,10 +48,10 @@ const InputForm = ({
           />
           <div
             className={`text-sm text-red-500 text-left w-full ${
-              errors[item.type] ? "block" : "hidden"
+              errors[item.id] ? "block" : "hidden"
             }`}
           >
-            {errors[item.type] ? <>{errors[item.type]?.message}</> : null}
+            {errors[item.id] ? <>{errors[item.id]?.message}</> : null}
           </div>
         </Fragment>
       ))}

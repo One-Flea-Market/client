@@ -16,10 +16,10 @@ const Inquiry = () => {
         <InputForm
           formArr={[
             { type: "text", plac: "제목을 입력하세요. (최대20자)", id: "title" },
-            { type: "email", plac: "email" }
+            { type: "email", plac: "email", id: "email" }
           ]}
           anyway={{ plac: "문의 내용", value: "문의하기" }}
-          base={"/문의 작성 링크"}
+          base="/inquiry"
         />
       </section>
     </main>
