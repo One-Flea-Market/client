@@ -13,16 +13,15 @@ const SignIn = () => {
       <UserInputComponent
         settingOption={[
           { plac: "email", type: "email" },
-          { plac: "password", type: "password" },
           { plac: "username", type: "text" },
+          { plac: "password", type: "password" },
           { plac: "phone-number", type: "text" }
         ]}
         pageValue="Sign-in"
-        url="/join"
+        url="/sign-in"
       />
     </main>
   )
 }
 
 export default SignIn
-//https://velog.io/@skgmlsla/Next.js-13-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-lottie-%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98%EC%9C%BC%EB%A1%9C-404-%ED%8E%98%EC%9D%B4%EC%A7%80
