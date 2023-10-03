@@ -98,7 +98,7 @@ const Comment = ({ url }: { url: string }) => {
                           else {
                             if (window.confirm(`댓글을 ${str} 하시겠습니까?`)) {
                               const { result, message } = await (
-                                await axios.delete(`/board/${params}/comment/${item.id}/delete `)
+                                await axios.delete(`${url}/${item.id}/delete `)
                               ).data
                               // if(result)mutate(data=>data.filter(fitem => fitem.id !== item.id),false)
                               // else alert(message)
@@ -131,7 +131,7 @@ const Comment = ({ url }: { url: string }) => {
                       //   false
                       // )
                       const { result, message } = await (
-                        await axios.patch(`/board/${params}/comment/${item.id}/modify `, {
+                        await axios.patch(`${url}/${item.id}/modify `, {
                           change
                         })
                       ).data

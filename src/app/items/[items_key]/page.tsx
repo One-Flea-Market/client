@@ -1,21 +1,17 @@
 "use client"
-import "swiper/css"
-import "swiper/css/navigation"
-import "swiper/css/pagination"
-import Image from "next/image"
 import Comment from "@/components/comment"
-import { Navigation, Pagination } from "swiper/modules"
-import { Swiper, SwiperSlide } from "swiper/react"
 import { motion } from "framer-motion"
 import useSWR from "swr"
 import axios from "axios"
 import dynamic from "next/dynamic"
 import { useState } from "react"
+import Carousel from "@/components/carousel"
+import { useRouter } from "next/navigation"
 const Registration = dynamic(() => import("@/components/registration"))
 const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } }) => {
   const data = {
     id: items_key,
-    imageList: [
+    list: [
       "https://media.bunjang.co.kr/images/nocrop/1039348912_w1197.jpg",
       "https://media.bunjang.co.kr/images/nocrop/1040164730_w1197.jpg",
       "https://media.bunjang.co.kr/images/nocrop/1036285342_w1197.jpg",
@@ -31,36 +27,15 @@ const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } 
   }
 
   const [state, setState] = useState(true)
-
-  // const {data:a,mutate} = useSWR("")
+  const { refresh, back } = useRouter()
+  // const {data:a,mutate} = useSWR(`/items/${items_key}`)
   return (
     <main>
       {state ? (
         <>
           <nav className="grid grid-cols-1 md:grid-cols-2 mb-3 md:gap-x-5 place-content-center">
             <section>
-              <Swiper
-                className="h-80 rounded-xl cursor-pointer shadow-sm w-full"
-                modules={[Navigation, Pagination]}
-                spaceBetween={20}
-                slidesPerView={1}
-                loop={true}
-                pagination={{ clickable: true }}
-                navigation={true}
-              >
-                {data.imageList.map(item => (
-                  <SwiperSlide key={item} className="w-full [&>*]:w-full [&>*]:h-full ">
-                    <Image
-                      src={item}
-                      alt={""}
-                      width={500}
-                      height={500}
-                      loading="lazy"
-                      className="w-auto h-auto"
-                    />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
+              <Carousel list={data.list} path />
             </section>
             <section className="flex flex-col p-2 [&>*]:mb-5">
               <article className="border-b border-gray-300 [&>*]:mb-3">
@@ -91,8 +66,16 @@ const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } 
                         onClick={async () => {
                           if (item === "수정") setState(state => !state)
                           else {
-                            if (window.confirm("게시물을 삭제하시겠습니까?"))
-                              await axios.delete("/items/id")
+                            if (window.confirm("게시물을 삭제하시겠습니까?")) {
+                              const { result, message } = await (
+                                await axios.delete(`/items/${items_key}/delete `)
+                              ).data
+                              if (result) back()
+                              else {
+                                alert(message)
+                                refresh()
+                              }
+                            }
                           }
                         }}
                       />
@@ -105,7 +88,13 @@ const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } 
                       className="bg-gray-100 w-[60%] flex justify-center items-center h-12 rounded-lg hover:bg-gray-200"
                       onClick={async () => {
                         // mutate({ ...data, onlike: !data.onlike }, false)
-                        // await axios.patch("/상품/id")
+                        const { result, message } = await (
+                          await axios.patch(`/items/${items_key}/like`, { onlike: data.onlike })
+                        ).data
+                        if (!result) {
+                          alert(message)
+                          refresh()
+                        }
                       }}
                     >
                       <motion.svg
@@ -131,18 +120,20 @@ const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } 
           </article>
 
           <footer>
-            <Comment />
+            <Comment url={`/items/${items_key}/comment`} />
           </footer>
         </>
       ) : (
         <Registration
-          title={"상품 수정"}
-          imgArr={data.imageList}
+          title="상품 수정"
+          imgArr={data.list}
           subTitle={data.title}
           price={data.price}
           text={data.body}
-          value={"수정하기"}
+          value="수정하기"
           current={data.status}
+          type="put"
+          url={`/items/${items_key}/modify `}
         />
       )}
     </main>
@@ -150,4 +141,3 @@ const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } 
 }
 
 export default ItemsDetail
-// 수정 삭제및 찜하기 기능구현

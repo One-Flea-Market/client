@@ -1,84 +1,47 @@
 "use client"
 import useSubmit from "@/hooks/useSubmit"
-import Image from "next/image"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { motion } from "framer-motion"
 import useMovement from "@/hooks/useMovement"
-function Registration({ title, imgArr = [], subTitle, price, text, value, current }: any) {
-  const [imageList, setImageList] = useState<string[]>([...imgArr])
-  const [status, setStatus] = useState(current)
-  const { register, handleSubmit } = useForm()
-  const { loading, valid } = useSubmit({ base: "", more: { imageList, status } })
+import UploadImage from "./uploadImage"
+import ShowImage from "./showImage"
+function Registration(props: any) {
+  const [data, setData] = useState({
+    list: props.imgArr ? props.imgArr : [],
+    status: props.current ? props.current : "not"
+  })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm()
+  const { loading, valid } = useSubmit({
+    base: props.url,
+    type: props.type,
+    more: { list: data.list, status: data.status }
+  })
   useMovement()
   return (
     <section>
       <nav>
-        <h1 className="text-2xl mb-2">{title}</h1>
+        <h1 className="text-2xl mb-2">{props.title}</h1>
       </nav>
-      <article
-        className={`grid ${
-          imageList.length ? "grid-cols-3 md:grid-cols-4" : "grid-cols-1"
-        } gap-3 border-dotted border-4 border-blue-300 p-2 rounded-lg min-h-[55vh]  max-h-[120vh]`}
-      >
-        {imageList.length ? (
-          <>
-            {imageList.map((item, index) => (
-              <div key={item} className="w-full h-[25vh] relative">
-                <Image
-                  src={item}
-                  alt={`${item}-${index}`}
-                  width={400}
-                  height={400}
-                  className="w-full h-full rounded-lg"
-                />
-
-                <input
-                  type="button"
-                  value="x"
-                  onClick={() => setImageList(state => state.filter((_, id) => id !== index))}
-                  className="absolute right-1 top-1 bg-red-600 text-white text-base rounded-full w-8 h-8 hover:text-black"
-                />
-              </div>
-            ))}
-          </>
-        ) : (
-          <div className="w-full h-full flex justify-center items-center text-xl text-gray-500">
-            이미지를 업로드 해주세요.(최대 12장)
-          </div>
-        )}
-      </article>
-
-      <article className="border-b border-gray-300">
-        <label
-          htmlFor="input-file"
-          onChange={(event: any) => {
-            const target = event.target
-            const imageLists = target.files
-            let imageUrlLists: string[] = [...imageList]
-            for (let i = 0; i < imageLists.length; i++)
-              imageUrlLists.push(URL.createObjectURL(imageLists[i]))
-            if (imageUrlLists.length > 12) imageUrlLists = imageUrlLists.slice(0, 12)
-            setImageList(imageUrlLists)
-          }}
-        >
-          <input type="file" id="input-file" multiple className="hidden" />
-          {imageList.length < 12 && (
-            <div className="my-3 text-center text-lg hover:text-blue-300">사진 추가</div>
-          )}
-        </label>
-      </article>
+      <UploadImage data={data} setData={setData} />
+      <ShowImage data={data} setData={setData} />
 
       <article>
         <form
           onSubmit={handleSubmit(valid)}
-          className="[&>*]:my-3 [&>*]:border-4 [&>*]:border-blue-300 [&>*]:rounded-lg [&>*]:outline-none w-full flex flex-col justify-center"
+          className="[&>*]:my-3 [&>*]:rounded-lg [&>*]:outline-none w-full flex flex-col justify-center"
         >
           <input
             type="text"
-            className="p-2 h-[4rem]"
-            defaultValue={subTitle}
-            placeholder="제목을 입력 해주세요."
+            className={`p-2 h-[4rem] border-4 ${
+              errors["title"] ? "border-red-300" : "border-blue-300"
+            }`}
+            defaultValue={props.subTitle}
+            placeholder="제목을 입력 해주세요. (3자 이상)"
             {...register("title", {
               required: { value: true, message: "필수 양식 입니다." },
               minLength: 3,
@@ -87,27 +50,33 @@ function Registration({ title, imgArr = [], subTitle, price, text, value, curren
           />
           <input
             type="text"
-            className="p-2 h-[4rem]"
-            defaultValue={price}
-            placeholder="가격을 입력 해주세요."
+            className={`p-2 h-[4rem] border-4 ${
+              errors["price"] ? "border-red-300" : "border-blue-300"
+            }`}
+            defaultValue={props.price}
+            placeholder="가격을 입력 해주세요. (100원 이상)"
             {...register("price", { minLength: 3, pattern: /^[0-9]+$/ })}
           />
-          <div className="border-none flex justify-between [&>*]:h-[4rem] [&>*]:w-[40%] [&>*]:mx-auto [&>*]:border-4 [&>*]:border-blue-300 [&>*]:p-2 [&>*]:rounded-lg [&>*]:outline-none">
+          <div className="border-none flex justify-between [&>*]:h-[4rem] [&>*]:w-[40%] [&>*]:mx-auto border-4 border-blue-300 [&>*]:p-2 [&>*]:rounded-lg [&>*]:outline-none">
             {["거래", "대여"].map(item => (
               <motion.input
                 type="button"
                 whileHover={{ scale: 0.9, transition: { duration: 0.3 } }}
                 value={item}
                 key={item}
-                onClick={e => setStatus(e.currentTarget.value)}
-                className={`${status === item ? "bg-blue-300 text-white" : null}`}
+                onClick={() => setData(state => ({ ...state, status: item }))}
+                className={`border-4 border-blue-300 ${
+                  data.status === item ? "bg-blue-300 text-white" : null
+                }`}
               />
             ))}
           </div>
           <textarea
-            className="resize-none p-3 h-[40vh]"
-            defaultValue={text}
-            placeholder="설명을 입력 해주세요."
+            className={`resize-none p-3 h-[40vh] border-4 border-blue-300 ${
+              errors["body"] && "border-red-300"
+            }`}
+            defaultValue={props.text}
+            placeholder="설명을 입력 해주세요. (10자 이상)"
             {...register("body", {
               minLength: 10,
               required: true
@@ -117,7 +86,7 @@ function Registration({ title, imgArr = [], subTitle, price, text, value, curren
             <input
               type="submit"
               disabled={loading}
-              value={value}
+              value={props.value}
               className="border-none w-[50%] h-[3rem] bg-blue-500 text-white hover:opacity-70 rounded-lg"
             />
           </div>
@@ -126,5 +95,4 @@ function Registration({ title, imgArr = [], subTitle, price, text, value, curren
     </section>
   )
 }
-//date 필요
 export default Registration

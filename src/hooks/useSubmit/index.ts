@@ -12,6 +12,15 @@ const useSubmit = ({ base, after, more, type = "post" }: submitData) => {
   const time = new Date()
   const [loading, setLoading] = useState(false)
   const valid = async (data: Record<string, string>) => {
+    if (more && more.list && !more.list.length) {
+      alert("모든 양식을 선택 해주세요.")
+      return
+    }
+
+    if (more && more.status === "not") {
+      alert("모든 양식을 선택 해주세요.")
+      return
+    }
     const moudule = {
       ...data,
       ...more,
