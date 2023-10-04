@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const Login = () => {
   return (
     <main className="mx-auto flex flex-col h-[80vh] items-center justify-center [&>*]:font-bold text-center">
-      <h1 className="lg:text-3xl  w-[70vw] md:w-[45vw] lg:w-[50vw] text-left">Log-In</h1>
+      <h1 className="lg:text-3xl  w-[70vw] md:w-[60vw] text-left">Log-In</h1>
       <UserInputComponent
         settingOption={[
           { plac: "email", type: "email" },

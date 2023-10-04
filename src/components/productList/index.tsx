@@ -1,11 +1,10 @@
 "use client"
-import Image from "next/image"
 import Link from "next/link"
-import { motion } from "framer-motion"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
-import axios from "axios"
 import useMore from "@/hooks/useMore"
+import Product from "./product"
+import XIcon from "./xIcon"
 function ProductList({ link }: { link: string }) {
   const pathName = usePathname()
   const [state, setState] = useState({
@@ -104,55 +103,10 @@ function ProductList({ link }: { link: string }) {
         {state.list.map(item => (
           <div key={item.id} className="relative">
             <Link href={`/items/${item.id}`} prefetch={false}>
-              <motion.article
-                whileHover={{ scale: 0.9, transition: { duration: 0.25, type: "keyframes" } }}
-                className="shadow-xl p-2 rounded-lg"
-              >
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  width={500}
-                  height={500}
-                  loading="lazy"
-                  className="rounded-lg"
-                />
-                <div className="flex justify-between items-center pl-2">
-                  <div className="max-w-[70%]">
-                    <div className="mt-2 w-full overflow-hidden whitespace-nowrap text-ellipsis text-xxs md:text-sm">
-                      {item.title}
-                    </div>
-                    <div className="mt-1 flex [&>*]:text-xxs md:[&>*]:text-base">
-                      <div className="max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
-                        {item.price}
-                      </div>
-                      <span>원</span>
-                    </div>
-                  </div>
-
-                  <div className="text-xxs md:text-base font-bold">{item.status}</div>
-                </div>
-              </motion.article>
+              <Product {...item} />
             </Link>
 
-            {pathName === "/cart" ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-6 h-6 absolute bg-red-500 text-white rounded-full top-3 right-3"
-                onClick={async () => {
-                  // if (
-                  window.confirm("장바구니에서 삭제 하시겠습니까?")
-                  // ) filter(item.id)
-                  //const {result , message} = await(await axios.delete(`/cart/${item.id}`)).data
-                  // if(!result) alert(message)
-                }}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : null}
+            {pathName === "/cart" ? <XIcon id={item.id} /> : null}
           </div>
         ))}
       </section>

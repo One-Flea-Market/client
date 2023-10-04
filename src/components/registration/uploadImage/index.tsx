@@ -1,15 +1,17 @@
+import { registration } from "@/atoms/registration"
 import Image from "next/image"
-import { memo } from "react"
-const UploadImage = ({ data, setData }: any) => {
+import { useRecoilState } from "recoil"
+const UploadImage = () => {
+  const [{ list }, setState] = useRecoilState(registration)
   return (
     <article
       className={`grid ${
-        data.list.length ? "grid-cols-3 md:grid-cols-4" : "grid-cols-1"
+        list.length ? "grid-cols-3 md:grid-cols-4" : "grid-cols-1"
       } gap-3 border-dotted border-4 border-blue-300 p-2 rounded-lg min-h-[55vh]  max-h-[120vh]`}
     >
-      {data.list.length ? (
+      {list.length ? (
         <>
-          {data.list.map((item: string, index: number) => (
+          {list.map((item: string, index: number) => (
             <div key={item} className="w-full h-[25vh] relative">
               <Image
                 src={item}
@@ -23,7 +25,7 @@ const UploadImage = ({ data, setData }: any) => {
                 type="button"
                 value="x"
                 onClick={() =>
-                  setData((state: any) => ({
+                  setState((state: any) => ({
                     ...state,
                     list: state.list.filter((_: string, id: number) => id !== index)
                   }))
@@ -41,4 +43,4 @@ const UploadImage = ({ data, setData }: any) => {
     </article>
   )
 }
-export default memo(UploadImage)
+export default UploadImage

@@ -8,7 +8,7 @@ const UserInfo = async () => {
 
   //   const data = await(await fetch("/admin")).json()
   return (
-    <>
+    <section>
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@ const UserInfo = async () => {
         <div>가입 날짜: {data.date}</div>
         <div>핸드폰: {data["phone-number"]}</div>
       </div>
-    </>
+    </section>
   )
 }
 

@@ -1,11 +1,14 @@
 "use client"
-import useSubmit from "@/hooks/useSubmit"
-import axios from "axios"
-import { useParams } from "next/navigation"
-import { useLayoutEffect, useState } from "react"
-import { useForm } from "react-hook-form"
+import { useLayoutEffect } from "react"
 import useSWR from "swr"
-
+import CommentInput from "./commentInput"
+import { useRecoilState } from "recoil"
+import { commentModify } from "@/atoms/commentModify"
+import CommentBtn from "./commentBtn"
+import CommentConfirm from "./commentConfirm"
+import dynamic from "next/dynamic"
+const CommentModify = dynamic(() => import("./commentModify"))
+type commentModify = Record<string, Record<string, boolean | string>>
 const data = [
   { username: "유저5", body: "지리네요", date: "9999-99-99", id: "v1", oneself: false },
   { username: "유저3", body: "good!", date: "9999-99-99", id: "v2", oneself: false },
@@ -15,40 +18,18 @@ const data = [
 ]
 
 const Comment = ({ url }: { url: string }) => {
-  const time = new Date()
-  const params = useParams()
-  const { register, handleSubmit } = useForm()
   // const { data, mutate } = useSWR(url)
-  const { loading, valid } = useSubmit({
-    base: `/board/${params}/comment/new`,
-    more: `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`
-  })
-  const [state, setState] = useState<Record<string, Record<string, boolean | string>>>({})
+  const [state, setState] = useRecoilState<commentModify>(commentModify)
   useLayoutEffect(() => {
     data.map(item => {
       if (item.oneself) {
-        setState(state => ({ ...state, [item.id]: { modify: true, text: "" } }))
+        setState(state => ({ ...state, [item.id]: { modify: true, text: "", date: item.date } }))
       }
     })
-  }, [])
+  }, [setState])
   return (
     <section>
-      <form onSubmit={handleSubmit(valid)} className="flex">
-        <textarea
-          className="resize-none border-4 border-blue-300 w-[85%] md:w-[90%] rounded-lg p-2 outline-none"
-          {...register("body", {
-            required: true,
-            minLength: 5
-          })}
-          placeholder="댓글을 입력 해주세요.(최소 5자)"
-        />
-        <input
-          type="submit"
-          value="입력"
-          disabled={loading}
-          className="mx-2 bg-blue-500 text-white w-[15%] md:w-[10%] rounded-lg"
-        />
-      </form>
+      <CommentInput url={url} />
 
       <article className="border-t border-gray-300 mt-2 ">
         {data.map(item => (
@@ -67,82 +48,14 @@ const Comment = ({ url }: { url: string }) => {
                 ) : state[item.id]["modify"] ? (
                   <div className="my-1 text-base w-[95%]">&nbsp;{item.body}</div>
                 ) : (
-                  <>
-                    &nbsp;
-                    <input
-                      type="text"
-                      defaultValue={item.body}
-                      className=" my-1 text-base w-[95%] p-2 outline-none border-4 border-blue-300 rounded-lg"
-                      onBlur={() =>
-                        setState(state => ({
-                          ...state,
-                          [item.id]: { ...state[item.id], text: !state[item.id]["text"] }
-                        }))
-                      }
-                    />
-                  </>
+                  <CommentModify {...item} />
                 )}
               </div>
               {item.oneself ? (
                 state[item.id] && state[item.id]["modify"] ? (
-                  <div className="flex [&>*]:text-sm">
-                    {["수정", "삭제"].map(str => (
-                      <div
-                        key={str}
-                        onClick={async () => {
-                          if (str === "수정")
-                            setState(state => ({
-                              ...state,
-                              [item.id]: { ...state[item.id], modify: !state[item.id]["modify"] }
-                            }))
-                          else {
-                            if (window.confirm(`댓글을 ${str} 하시겠습니까?`)) {
-                              const { result, message } = await (
-                                await axios.delete(`${url}/${item.id}/delete `)
-                              ).data
-                              // if(result)mutate(data=>data.filter(fitem => fitem.id !== item.id),false)
-                              // else alert(message)
-                            }
-                          }
-                        }}
-                        className="mx-1 hover:text-blue-300 cursor-pointer"
-                      >
-                        {str}
-                      </div>
-                    ))}
-                  </div>
+                  <CommentBtn {...item} url={url} />
                 ) : (
-                  <input
-                    type="button"
-                    value="수정하기"
-                    className="mx-1 hover:text-blue-300 cursor-pointer text-sm"
-                    onClick={async () => {
-                      const change = data.find(fitem => fitem === item),
-                        exclude = data.filter(fitem => fitem !== item)
-                      // mutate(
-                      //   [
-                      //     {
-                      //       ...change,
-                      //       text: state[item.id]["text"],
-                      //       date: `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`
-                      //     },
-                      //     ...exclude
-                      //   ],
-                      //   false
-                      // )
-                      const { result, message } = await (
-                        await axios.patch(`${url}/${item.id}/modify `, {
-                          change
-                        })
-                      ).data
-                      if (result)
-                        setState(state => ({
-                          ...state,
-                          [item.id]: { ...state[item.id], modify: !state[item.id]["modify"] }
-                        }))
-                      else alert(message)
-                    }}
-                  />
+                  <CommentConfirm {...item} url={url} />
                 )
               ) : null}
             </div>

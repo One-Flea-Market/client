@@ -1,10 +1,13 @@
+import LoginCheck from "@/components/loginCheck"
 import ProductList from "@/components/productList"
 
 const Cart = () => {
   return (
     <main className="[&>*]:font-bold">
-      <h1 className="text-xl">Cart</h1>
-      <ProductList url="/cart" />
+      <LoginCheck>
+        <h1 className="text-xl">Cart</h1>
+        <ProductList link="/cart" />
+      </LoginCheck>
     </main>
   )
 }

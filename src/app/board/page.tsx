@@ -5,7 +5,6 @@ import useMore from "@/hooks/useMore"
 import Link from "next/link"
 
 const Board = ({ searchParams: { search } }: { searchParams: { search: string } }) => {
-  // const res = await(await fetch(search?`/board/search/${search}`:"/board",{cache:'no-store'})).json()
   const res = {
     list: [
       { title: "게시글0", date: "9999-99-99", id: "v0" },

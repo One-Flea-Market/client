@@ -1,10 +1,9 @@
 "use client"
 import useMore from "@/hooks/useMore"
 import Link from "next/link"
-import { useState } from "react"
 
-const Notice = ({ searchParams: { search } }: { searchParams: { search: string } }) => {
-  const [state, setState] = useState({
+const Notice = () => {
+  const state = {
     list: [
       { title: "공지사항0", date: "9999-99-99", id: "v0" },
       { title: "공지사항1", date: "9999-99-99", id: "v1" },
@@ -18,7 +17,8 @@ const Notice = ({ searchParams: { search } }: { searchParams: { search: string }
       { title: "공지사항9", date: "9999-99-99", id: "v9" }
     ],
     next: true
-  })
+  }
+  // const {state,better} = useMore({link:"/notice"})
   return (
     <main className="gird grid-cols-1 [&>*]:font-bold w-full pt-1">
       <section className="flex w-full justify-between mb-3 ">
