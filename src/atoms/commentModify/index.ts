@@ -1,7 +1,7 @@
-import { atom, selector } from "recoil"
+import { atom } from "recoil"
 import { v1 } from "uuid"
 
-export const commentModify = atom<Record<string, Record<string, boolean | string>>>({
+export const commentModify = atom<commentModify>({
   key: `commentModify ${v1()}`,
   default: {}
 })

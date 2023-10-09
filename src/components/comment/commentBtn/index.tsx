@@ -2,14 +2,7 @@ import axios from "axios"
 import { commentModify } from "@/atoms/commentModify"
 import { useSetRecoilState } from "recoil"
 import { useSWRConfig } from "swr"
-const CommentBtn = (item: {
-  username: string
-  body: string
-  date: string
-  id: string
-  oneself: boolean
-  url: string
-}) => {
+const CommentBtn = (item: commentConfirm) => {
   const setState = useSetRecoilState(commentModify)
   const { mutate } = useSWRConfig()
   return (

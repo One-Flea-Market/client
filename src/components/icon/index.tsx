@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
-const Icon = ({ url }: { url: string }) => {
+const Icon = ({ url }: url) => {
   const { push } = useRouter()
   return (
     <motion.svg

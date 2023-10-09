@@ -1,7 +1,7 @@
 import useSubmit from "@/hooks/useSubmit"
 import { useForm } from "react-hook-form"
 
-const CommentInput = ({ url }: { url: string }) => {
+const CommentInput = ({ url }: url) => {
   const { register, handleSubmit } = useForm()
   // const { data, mutate } = useSWR(url)
   const { loading, valid } = useSubmit({ base: `${url}/new` })

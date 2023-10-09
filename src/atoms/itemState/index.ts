@@ -1,4 +1,4 @@
-import { atom } from "recoil"
+import { atom, selector } from "recoil"
 import { v1 } from "uuid"
 
 export const itemState = atom({
@@ -8,5 +8,5 @@ export const itemState = atom({
 
 export const boardState = atom({
   key: `boardState ${v1()}`,
-  default: false
+  default: true
 })

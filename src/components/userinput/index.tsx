@@ -11,15 +11,7 @@ import Input from "./Input"
 import dynamic from "next/dynamic"
 import axios from "axios"
 const EmailAuth = dynamic(() => import("./emailAuth"))
-const UserInputComponent = ({
-  settingOption,
-  pageValue,
-  url
-}: {
-  settingOption: Record<string, string>[]
-  pageValue: string
-  url: string
-}) => {
+const UserInputComponent = ({ settingOption, pageValue, url }: userInput) => {
   const {
     register,
     handleSubmit,

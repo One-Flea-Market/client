@@ -9,7 +9,6 @@ const CommentModify = dynamic(() => import("./commentModify"))
 const CommentBtn = dynamic(() => import("./commentBtn"))
 const CommentConfirm = dynamic(() => import("./commentConfirm"))
 
-type commentModify = Record<string, Record<string, boolean | string>>
 const data = [
   { username: "유저5", body: "지리네요", date: "9999-99-99", id: "v1", oneself: false },
   { username: "유저3", body: "good!", date: "9999-99-99", id: "v2", oneself: false },
@@ -18,7 +17,7 @@ const data = [
   { username: "유저1", body: "radio gaga", date: "9999-99-99", id: "v5", oneself: true }
 ]
 
-const Comment = ({ url }: { url: string }) => {
+const Comment = ({ url }: url) => {
   // const { data, mutate } = useSWR(url)
   const [state, setState] = useRecoilState<commentModify>(commentModify)
   useLayoutEffect(() => {

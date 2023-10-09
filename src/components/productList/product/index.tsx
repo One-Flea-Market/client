@@ -1,12 +1,6 @@
 import Image from "next/image"
 import { motion } from "framer-motion"
-const Product = (item: {
-  image: string
-  price: string
-  title: string
-  id: string
-  status: string
-}) => {
+const Product = (item: products) => {
   return (
     <motion.article
       whileHover={{ scale: 0.9, transition: { duration: 0.25, type: "keyframes" } }}

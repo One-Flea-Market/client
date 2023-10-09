@@ -2,7 +2,7 @@ import axios from "axios"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
 import { useSWRConfig } from "swr"
-const ItemLike = ({ items_key, onlike }: any) => {
+const ItemLike = ({ items_key, onlike }: item) => {
   const { refresh } = useRouter()
   // const {mutate} = useSWRConfig()
   return (

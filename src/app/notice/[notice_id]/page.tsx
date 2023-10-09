@@ -1,5 +1,5 @@
 import Link from "next/link"
-const NoticeDetail = async ({ params: { notice_id } }: { params: { notice_id: string } }) => {
+const NoticeDetail = async ({ params: { notice_id } }: notice) => {
   // const data = await (
   //   await fetch(`/notice/${notice_id} `, { cache: "no-store" })
   // ).json()

@@ -3,14 +3,7 @@ import axios from "axios"
 import { useRecoilState } from "recoil"
 import { useSWRConfig } from "swr"
 
-const CommentConfirm = (item: {
-  username: string
-  body: string
-  date: string
-  id: string
-  oneself: boolean
-  url: string
-}) => {
+const CommentConfirm = (item: commentConfirm) => {
   const [state, setState] = useRecoilState(commentModify)
   const { mutate } = useSWRConfig()
   return (

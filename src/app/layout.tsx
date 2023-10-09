@@ -4,7 +4,7 @@ import { Inter } from "next/font/google"
 import CustomConfig from "@/components/customConfig"
 const inter = Inter({ subsets: ["cyrillic"] })
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: child) {
   let login = true
   // const {login} = await (await fetch("/check", { cache: "no-store" })).json()
   return (

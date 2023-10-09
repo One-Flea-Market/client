@@ -4,12 +4,14 @@ import useSWR from "swr"
 import dynamic from "next/dynamic"
 import Carousel from "@/components/carousel"
 import LoginCheck from "@/components/loginCheck"
-import { useRecoilValue } from "recoil"
+import { useRecoilState } from "recoil"
 import { itemState } from "@/atoms/itemState"
+import { useLayoutEffect } from "react"
+import useReset from "@/hooks/useReset/useReset"
 const Registration = dynamic(() => import("@/components/registration"))
 const ItemLike = dynamic(() => import("@/components/item/itemLike"))
 const ItemBtn = dynamic(() => import("@/components/item/itemBtn"))
-const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } }) => {
+const ItemsDetail = ({ params: { items_key } }: searchParams) => {
   const data = {
     id: items_key,
     list: [
@@ -27,7 +29,8 @@ const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } 
     onlike: false
   }
 
-  const state = useRecoilValue(itemState)
+  const [state, setState] = useRecoilState(itemState)
+  useReset({ setState })
   // const {data} = useSWR(`/items/${items_key}`)
   return (
     <main>

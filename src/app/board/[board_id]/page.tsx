@@ -3,12 +3,14 @@
 import { boardState } from "@/atoms/itemState"
 import Comment from "@/components/comment"
 import LoginCheck from "@/components/loginCheck"
+import useReset from "@/hooks/useReset/useReset"
 import dynamic from "next/dynamic"
-import { useRecoilValue } from "recoil"
+import { useLayoutEffect } from "react"
+import { useRecoilState } from "recoil"
 import useSWR from "swr"
 const InputForm = dynamic(() => import("@/components/inputForm"))
 const ItemBtn = dynamic(() => import("@/components/item/itemBtn"))
-const BoardDetail = ({ params: { board_id } }: { params: { board_id: string } }) => {
+const BoardDetail = ({ params: { board_id } }: search) => {
   //const {data} = useSWR(`/board/${board_id}`)
 
   const data = {
@@ -19,28 +21,13 @@ const BoardDetail = ({ params: { board_id } }: { params: { board_id: string } })
     id: "v9",
     oneself: true
   }
-  const state = useRecoilValue(boardState)
+  const [state, setState] = useRecoilState(boardState)
+  useReset({ setState })
+
   return (
     <main className="[&>*]:font-bold">
       <LoginCheck>
         {state ? (
-          <>
-            <InputForm
-              formArr={[
-                {
-                  type: "text",
-                  plac: "제목을 입력하세요. (최대20자)",
-                  defv: data.title,
-                  id: "title"
-                }
-              ]}
-              anyway={{ plac: "게시글 내용", value: "수정 하기", defv: data.body }}
-              base={`/board/${board_id}/modify `}
-              after="/board"
-              type="patch"
-            />
-          </>
-        ) : (
           <>
             <section className="flex w-full justify-between items-center border-b border-b-gray-400">
               <h1 className="text-lg mb-2 max-w-[80%] overflow-hidden text-ellipsis whitespace-nowrap ">
@@ -65,6 +52,23 @@ const BoardDetail = ({ params: { board_id } }: { params: { board_id: string } })
               </div>
               <Comment url={`/board/${board_id}/comment `} />
             </footer>
+          </>
+        ) : (
+          <>
+            <InputForm
+              formArr={[
+                {
+                  type: "text",
+                  plac: "제목을 입력하세요. (최대20자)",
+                  defv: data.title,
+                  id: "title"
+                }
+              ]}
+              anyway={{ plac: "게시글 내용", value: "수정 하기", defv: data.body }}
+              base={`/board/${board_id}/modify `}
+              after="/board"
+              type="patch"
+            />
           </>
         )}
       </LoginCheck>

@@ -12,7 +12,7 @@ const Login = () => {
       <h1 className="lg:text-3xl  w-[70vw] md:w-[60vw] text-left">Log-In</h1>
       <UserInputComponent
         settingOption={[
-          { plac: "email", type: "email" },
+          { plac: "e-mail", type: "email" },
           { plac: "password", type: "password" }
         ]}
         pageValue="Log-in"

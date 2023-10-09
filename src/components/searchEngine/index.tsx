@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 
-const SearchEngine = ({ mode }: { mode: "rental" | "transaction" | "board" | "items" }) => {
+const SearchEngine = ({ mode }: mode) => {
   const { push } = useRouter()
   const { register, handleSubmit } = useForm()
 

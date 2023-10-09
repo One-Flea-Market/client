@@ -1,10 +1,10 @@
 "use client"
-import { boardState, itemState } from "@/atoms/itemState"
+import { itemState, boardState } from "@/atoms/itemState"
 import axios from "axios"
 import { useRouter } from "next/navigation"
 import { useSetRecoilState } from "recoil"
 
-const ItemBtn = ({ link, path }: { link: string; path?: boolean }) => {
+const ItemBtn = ({ link, path }: path) => {
   const { refresh, back } = useRouter()
   const setState = useSetRecoilState(path ? boardState : itemState)
   return (

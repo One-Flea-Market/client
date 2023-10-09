@@ -6,7 +6,7 @@ import Image from "next/image"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination, Autoplay } from "swiper/modules"
 
-const Carousel = ({ list, path }: { list: string[]; path?: boolean }) => {
+const Carousel = ({ list, path }: carousel) => {
   return (
     <Swiper
       className={`${path ? "h-80 w-full" : "h-56"} rounded-xl cursor-pointer shadow-sm`}

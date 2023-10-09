@@ -1,13 +1,6 @@
 import axios from "axios"
 import { useState } from "react"
 
-interface submitData {
-  base: string
-  after?: string
-  more?: any
-  type?: "post" | "patch" | "delete" | "put"
-}
-
 const useSubmit = ({ base, after, more, type = "post" }: submitData) => {
   const time = new Date()
   const [loading, setLoading] = useState(false)

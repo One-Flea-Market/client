@@ -1,9 +1,8 @@
 import { signAuth, signState } from "@/atoms/signAuth"
 import axios from "axios"
 import { useRouter } from "next/navigation"
-import { FieldValues, UseFormWatch } from "react-hook-form"
 import { useRecoilState, useSetRecoilState } from "recoil"
-const AuthButton = ({ plac, watch }: { plac: string; watch: UseFormWatch<FieldValues> }) => {
+const AuthButton = ({ plac, watch }: auth) => {
   const { refresh } = useRouter()
   const [state, setState] = useRecoilState(signState)
   const setAuth = useSetRecoilState(signAuth)

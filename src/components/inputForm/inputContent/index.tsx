@@ -1,7 +1,6 @@
 import { Fragment } from "react"
 
-const InputContent = (item: any) => {
-  // key={item.type}
+const InputContent = (item: InputContent) => {
   return (
     <Fragment>
       <input

@@ -9,7 +9,7 @@ import ShowImage from "./showImage"
 import TitleInput from "./titleInput"
 import { useRecoilState } from "recoil"
 import { registration } from "@/atoms/registration"
-function Registration(props: any) {
+function Registration(props: registration) {
   const [{ list, status }, setState] = useRecoilState(registration)
   const {
     register,
@@ -24,7 +24,7 @@ function Registration(props: any) {
   useMovement()
   useLayoutEffect(() => {
     setState({
-      list: props.imgArr ? props.imgArr : [],
+      list: props.imgArr ? props.imgArr : ([] as string[]),
       status: props.current ? props.current : "not"
     })
   }, [setState, props])
@@ -60,7 +60,7 @@ function Registration(props: any) {
               register={register}
               errors={errors}
               key={item.id}
-              defv={props[item.id]}
+              defv={props[item.id as "subTitle" | "price"]}
             />
           ))}
 

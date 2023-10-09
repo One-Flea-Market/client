@@ -2,13 +2,7 @@ import { commentModify } from "@/atoms/commentModify"
 import useMovement from "@/hooks/useMovement"
 import { useEffect } from "react"
 import { useSetRecoilState } from "recoil"
-const CommentModify = (item: {
-  username: string
-  body: string
-  date: string
-  id: string
-  oneself: boolean
-}) => {
+const CommentModify = (item: typeof data) => {
   const setState = useSetRecoilState(commentModify)
   useEffect(() => {
     setState(state => {

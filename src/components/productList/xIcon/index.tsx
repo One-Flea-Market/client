@@ -1,7 +1,7 @@
 import useMore from "@/hooks/useMore"
 import axios from "axios"
 
-const XIcon = ({ id, link }: { id: string; link: string }) => {
+const XIcon = ({ id, link }: x) => {
   const { filter } = useMore({ link })
   return (
     <svg

@@ -1,14 +1,4 @@
-import React from "react"
-
-function TitleInput(item: {
-  type: string
-  plac: string
-  id: string
-  value: string
-  errors: any
-  register: any
-  defv?: string
-}) {
+const TitleInput = (item: titleInput) => {
   return (
     <input
       type={item.type}

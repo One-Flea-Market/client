@@ -4,7 +4,7 @@ import { useState } from "react"
 import useMore from "@/hooks/useMore"
 import Product from "./product"
 import XIcon from "./xIcon"
-function ProductList({ link }: { link: string }) {
+function ProductList({ link }: path) {
   const [state, setState] = useState({
     list: [
       {

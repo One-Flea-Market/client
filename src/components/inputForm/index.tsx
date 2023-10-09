@@ -3,19 +3,7 @@ import { useForm } from "react-hook-form"
 import useSubmit from "@/hooks/useSubmit/index"
 import useMovement from "@/hooks/useMovement"
 import InputContent from "./inputContent"
-const InputForm = ({
-  formArr,
-  anyway,
-  base,
-  after,
-  type
-}: {
-  formArr: Record<string, string>[]
-  anyway: Record<string, string>
-  base: string
-  after?: string
-  type?: "post" | "patch" | "delete"
-}) => {
+const InputForm = ({ formArr, anyway, base, after, type }: inputForm) => {
   const {
     register,
     handleSubmit,

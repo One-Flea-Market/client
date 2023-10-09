@@ -2,17 +2,7 @@ import { useRecoilValue } from "recoil"
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form"
 import { signState } from "@/atoms/signAuth"
 
-const Input = ({
-  register,
-  plac,
-  type,
-  errors
-}: {
-  register: UseFormRegister<FieldValues>
-  errors: FieldErrors<FieldValues>
-  plac: string
-  type: string
-}) => {
+const Input = ({ register, plac, type, errors }: input) => {
   const state = useRecoilValue(signState)
   return (
     <input

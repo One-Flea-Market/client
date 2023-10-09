@@ -8,7 +8,7 @@ interface listData {
   next?: boolean
 }
 
-const useMore = ({ link }: { link: string }) => {
+const useMore = ({ link }: Pick<path, "link">) => {
   const [state, setState] = useState<listData>({ list: [] })
   const { back, refresh } = useRouter()
   useLayoutEffect(() => {
