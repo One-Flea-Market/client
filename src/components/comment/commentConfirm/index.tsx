@@ -12,7 +12,7 @@ const CommentConfirm = (item: {
   url: string
 }) => {
   const [state, setState] = useRecoilState(commentModify)
-  // const { mutate } = useSWRConfig()
+  const { mutate } = useSWRConfig()
   return (
     <input
       type="button"

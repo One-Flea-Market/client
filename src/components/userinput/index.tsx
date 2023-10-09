@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil"
 import AuthButton from "./authButton"
 import Input from "./Input"
 import dynamic from "next/dynamic"
+import axios from "axios"
 const EmailAuth = dynamic(() => import("./emailAuth"))
 const UserInputComponent = ({
   settingOption,
@@ -27,6 +28,7 @@ const UserInputComponent = ({
   } = useForm()
 
   const state = useRecoilValue(signState)
+  const { replace, refresh } = useRouter()
   const { loading, valid } = useSubmit({ base: url })
   // useLayoutEffect(() => {
   // void(async()=>{
@@ -37,7 +39,7 @@ const UserInputComponent = ({
   //     refresh()
   //   }
   // })()
-  // }, [data])
+  // }, [refresh,replace])
   useMovement()
   return (
     <form className="flex justify-center flex-col" onSubmit={handleSubmit(valid)}>

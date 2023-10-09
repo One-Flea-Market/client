@@ -1,3 +1,4 @@
+"use client"
 import { boardState, itemState } from "@/atoms/itemState"
 import axios from "axios"
 import { useRouter } from "next/navigation"

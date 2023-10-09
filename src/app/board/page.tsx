@@ -1,9 +1,7 @@
-"use client"
 import Icon from "@/components/icon"
 import SearchEngine from "@/components/searchEngine"
-import useMore from "@/hooks/useMore"
-import Link from "next/link"
-
+import BoardBody from "./boardBody"
+//meta data add
 const Board = ({ searchParams: { search } }: { searchParams: { search: string } }) => {
   const res = {
     list: [
@@ -20,9 +18,6 @@ const Board = ({ searchParams: { search } }: { searchParams: { search: string } 
     ],
     next: true
   }
-
-  // const {state,setState,better} = useMore({link:search?`/board/search/${search}`:"/board"})
-
   return (
     <main className="gird grid-cols-1 [&>*]:font-bold w-full pt-1">
       <section className="flex w-full justify-between mb-3 ">
@@ -30,29 +25,7 @@ const Board = ({ searchParams: { search } }: { searchParams: { search: string } 
         <SearchEngine mode="board" />
       </section>
 
-      <section className="flex flex-col min-h-[27rem]">
-        {res.list.map((item, index) => (
-          <Link key={item.id} href={`/board/${item.id}`} prefetch={false}>
-            <article className="flex w-full justify-between py-2 items-baseline border-b border-gray-300 hover:bg-gray-100">
-              <div className="w-[80%] overflow-hidden text-ellipsis whitespace-nowrap  text-base md:text-lg">
-                {index + 1}. {item.title}
-              </div>
-              <article className="text-xs ">{item.date}</article>
-            </article>
-          </Link>
-        ))}
-      </section>
-
-      <footer className="w-full flex justify-center mt-5">
-        {res.next && (
-          <input
-            type="button"
-            value="More &#8897;"
-            className="bg-blue-500 w-[80%] ml-2 text-xl h-10 rounded-xl hover:opacity-70 font-bold text-white"
-            // onClick={better}
-          />
-        )}
-      </footer>
+      <BoardBody search={search} />
 
       <Icon url="board/writing" />
     </main>

@@ -8,7 +8,7 @@ const UserInfo = async () => {
 
   //   const data = await(await fetch("/admin")).json()
   return (
-    <section>
+    <section className="flex items-center">
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@ const UserInfo = async () => {
           viewBox="0 0 24 24"
           strokeWidth={2}
           stroke="currentColor"
-          className="w-28 h-28 "
+          className="w-28 h-28 mx-1 md:mx-3"
         >
           <path
             strokeLinecap="round"

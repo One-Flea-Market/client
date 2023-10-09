@@ -4,10 +4,11 @@ import useSWR from "swr"
 import CommentInput from "./commentInput"
 import { useRecoilState } from "recoil"
 import { commentModify } from "@/atoms/commentModify"
-import CommentBtn from "./commentBtn"
-import CommentConfirm from "./commentConfirm"
 import dynamic from "next/dynamic"
 const CommentModify = dynamic(() => import("./commentModify"))
+const CommentBtn = dynamic(() => import("./commentBtn"))
+const CommentConfirm = dynamic(() => import("./commentConfirm"))
+
 type commentModify = Record<string, Record<string, boolean | string>>
 const data = [
   { username: "유저5", body: "지리네요", date: "9999-99-99", id: "v1", oneself: false },

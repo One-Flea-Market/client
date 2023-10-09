@@ -1,6 +1,7 @@
 import axios from "axios"
 import { commentModify } from "@/atoms/commentModify"
 import { useSetRecoilState } from "recoil"
+import { useSWRConfig } from "swr"
 const CommentBtn = (item: {
   username: string
   body: string
@@ -9,7 +10,8 @@ const CommentBtn = (item: {
   oneself: boolean
   url: string
 }) => {
-  const [setState] = [useSetRecoilState(commentModify)]
+  const setState = useSetRecoilState(commentModify)
+  const { mutate } = useSWRConfig()
   return (
     <div className="flex [&>*]:text-sm">
       {["수정", "삭제"].map(str => (
@@ -26,7 +28,12 @@ const CommentBtn = (item: {
                 const { result, message } = await (
                   await axios.delete(`${item.url}/${item.id}/delete `)
                 ).data
-                // if(result)mutate(data=>data.filter(fitem => fitem.id !== item.id),false)
+                // if (result)
+                // mutate(
+                //   item.url,
+                //   (data: any) => data.filter((fitem: any) => fitem.id !== item.id),
+                //   false
+                // )
                 // else alert(message)
               }
             }

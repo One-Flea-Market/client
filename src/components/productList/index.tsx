@@ -1,12 +1,10 @@
 "use client"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { useState } from "react"
 import useMore from "@/hooks/useMore"
 import Product from "./product"
 import XIcon from "./xIcon"
 function ProductList({ link }: { link: string }) {
-  const pathName = usePathname()
   const [state, setState] = useState({
     list: [
       {
@@ -96,7 +94,7 @@ function ProductList({ link }: { link: string }) {
     ],
     next: true
   })
-  // const {state,setState,better ,filter} = useMore({ link })
+  // const {state,better} = useMore({ link })
   return (
     <>
       <section className="grid grid-cols-3 md:grid-cols-4 gap-5 pt-3 [&>*]:font-bold">
@@ -106,21 +104,23 @@ function ProductList({ link }: { link: string }) {
               <Product {...item} />
             </Link>
 
-            {pathName === "/cart" ? <XIcon id={item.id} /> : null}
+            {link === "/cart" ? <XIcon id={item.id} link={link} /> : null}
           </div>
         ))}
       </section>
 
-      <footer className="w-full flex justify-center mt-5">
-        {state.next && (
-          <input
-            type="button"
-            value="More &#8897;"
-            className="bg-blue-500 w-[70%] font-bold text-white text-xl rounded-xl hover:opacity-70 h-10"
-            // onClick={better}
-          />
-        )}
-      </footer>
+      {link !== "/cart" && link !== "/admin/product" && (
+        <footer className="w-full flex justify-center mt-5">
+          {state.next && (
+            <input
+              type="button"
+              value="More &#8897;"
+              className="bg-blue-500 w-[70%] font-bold text-white text-xl rounded-xl hover:opacity-70 h-10"
+              // onClick={better}
+            />
+          )}
+        </footer>
+      )}
     </>
   )
 }

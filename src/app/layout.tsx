@@ -5,11 +5,8 @@ import CustomConfig from "@/components/customConfig"
 const inter = Inter({ subsets: ["cyrillic"] })
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let login = false
-  const data = await (
-    await fetch("https://jsonplaceholder.typicode.com/todos/1", { cache: "no-store" })
-  ).json()
-  //json place holder => "/check"
+  let login = true
+  // const {login} = await (await fetch("/check", { cache: "no-store" })).json()
   return (
     <html lang="ko">
       <body className={inter.className}>

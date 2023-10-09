@@ -1,6 +1,6 @@
 import LoginCheck from "@/components/loginCheck"
 import ProductList from "@/components/productList"
-
+// meta data add
 const Cart = () => {
   return (
     <main className="[&>*]:font-bold">

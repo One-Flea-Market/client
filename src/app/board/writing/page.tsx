@@ -1,6 +1,6 @@
 import InputForm from "@/components/inputForm"
 import LoginCheck from "@/components/loginCheck"
-
+//meta data add
 const Writing = () => {
   return (
     <main className="flex flex-col h-[70%] justify-center">

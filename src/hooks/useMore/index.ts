@@ -10,7 +10,7 @@ interface listData {
 
 const useMore = ({ link }: { link: string }) => {
   const [state, setState] = useState<listData>({ list: [] })
-  const { back } = useRouter()
+  const { back, refresh } = useRouter()
   useLayoutEffect(() => {
     void (async () => {
       try {
@@ -22,8 +22,12 @@ const useMore = ({ link }: { link: string }) => {
   }, [back, setState, link])
 
   const better = async () => {
-    const data = await (await axios(link)).data
-    return setState(state => ({ ...state, ...data }))
+    try {
+      const data = await (await axios(link)).data
+      return setState(state => ({ ...state, ...data }))
+    } catch {
+      refresh()
+    }
   }
 
   const filter = (id: string) =>
@@ -31,7 +35,7 @@ const useMore = ({ link }: { link: string }) => {
       return { list: state.list.filter(item => item.id !== id) }
     })
 
-  return { state, setState, better, filter }
+  return { state, better, filter }
 }
 
 export default useMore

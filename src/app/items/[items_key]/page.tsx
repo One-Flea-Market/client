@@ -28,7 +28,7 @@ const ItemsDetail = ({ params: { items_key } }: { params: { items_key: string } 
   }
 
   const state = useRecoilValue(itemState)
-  // const {mutate} = useSWR(`/items/${items_key}`)
+  // const {data} = useSWR(`/items/${items_key}`)
   return (
     <main>
       <LoginCheck>
