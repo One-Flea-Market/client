@@ -1,7 +1,6 @@
 "use client"
-import { Fragment, useLayoutEffect } from "react"
+import { Fragment } from "react"
 import { useForm } from "react-hook-form"
-import { useRouter } from "next/navigation"
 import useSubmit from "@/hooks/useSubmit/index"
 import useMovement from "@/hooks/useMovement"
 import { signState } from "@/atoms/signAuth"
@@ -9,7 +8,6 @@ import { useRecoilValue } from "recoil"
 import AuthButton from "./authButton"
 import Input from "./Input"
 import dynamic from "next/dynamic"
-import axios from "axios"
 const EmailAuth = dynamic(() => import("./emailAuth"))
 const UserInputComponent = ({ settingOption, pageValue, url }: userInput) => {
   const {
@@ -20,18 +18,7 @@ const UserInputComponent = ({ settingOption, pageValue, url }: userInput) => {
   } = useForm()
 
   const state = useRecoilValue(signState)
-  const { replace, refresh } = useRouter()
   const { loading, valid } = useSubmit({ base: url })
-  // useLayoutEffect(() => {
-  // void(async()=>{
-  //   try {
-  //     const {login} = await(await axios("/check")).data
-  //   if(login) replace("/")
-  //   } catch  {
-  //     refresh()
-  //   }
-  // })()
-  // }, [refresh,replace])
   useMovement()
   return (
     <form className="flex justify-center flex-col" onSubmit={handleSubmit(valid)}>

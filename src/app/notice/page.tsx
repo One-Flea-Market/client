@@ -3,22 +3,7 @@ import useMore from "@/hooks/useMore"
 import Link from "next/link"
 
 const Notice = () => {
-  const state = {
-    list: [
-      { title: "공지사항0", date: "9999-99-99", id: "v0" },
-      { title: "공지사항1", date: "9999-99-99", id: "v1" },
-      { title: "공지사항2", date: "9999-99-99", id: "v2" },
-      { title: "공지사항3", date: "9999-99-99", id: "v3" },
-      { title: "공지사항4", date: "9999-99-99", id: "v4" },
-      { title: "공지사항5", date: "9999-99-99", id: "v5" },
-      { title: "공지사항6", date: "9999-99-99", id: "v6" },
-      { title: "공지사항7", date: "9999-99-99", id: "v7" },
-      { title: "공지사항8", date: "9999-99-99", id: "v8" },
-      { title: "공지사항9", date: "9999-99-99", id: "v9" }
-    ],
-    next: true
-  }
-  // const {state,better} = useMore({link:"/notice"})
+  const { state, better } = useMore({ link: "/notice" })
   return (
     <main className="gird grid-cols-1 [&>*]:font-bold w-full pt-1">
       <section className="flex w-full justify-between mb-3 ">
@@ -27,7 +12,7 @@ const Notice = () => {
 
       <section className="flex flex-col min-h-[27rem]">
         {state.list.map((item, index) => (
-          <Link key={item.id} href={`/notice/${item.id}`} prefetch={false}>
+          <Link key={item.id as string} href={`/notice/${item.id}`} prefetch={false}>
             <article className="flex w-full justify-between py-2 items-baseline border-b border-gray-300 hover:bg-gray-100">
               <div className="w-[80%] overflow-hidden text-ellipsis whitespace-nowrap text-lg">
                 {index + 1}. {item.title}
@@ -44,7 +29,7 @@ const Notice = () => {
             type="button"
             value="More &#8897;"
             className="bg-blue-500 w-[70%] font-bold text-white text-xl rounded-xl hover:opacity-70 h-10"
-            // onClick={better}
+            onClick={better}
           />
         )}
       </footer>

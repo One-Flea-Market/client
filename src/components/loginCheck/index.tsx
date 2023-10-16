@@ -7,8 +7,7 @@ const LoginCheck = ({ children }: child) => {
   useLayoutEffect(() => {
     void (async () => {
       try {
-        // const data = await(await axios("/check")).data
-        const data = { login: true }
+        const data = await (await axios("/check")).data
         if (!data.login) replace("/log-in")
       } catch {
         refresh()

@@ -1,12 +1,5 @@
 const UserInfo = async () => {
-  const data = {
-    username: "유저1",
-    email: "user1@naver.com",
-    date: "9999-99-99",
-    "phone-number": "999-9999-9999"
-  }
-
-  //   const data = await(await fetch("/admin")).json()
+  const data = await (await fetch("/admin")).json()
   return (
     <section className="flex items-center">
       <div>

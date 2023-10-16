@@ -1,14 +1,10 @@
 import Link from "next/link"
 
 const NoticeList = async () => {
-  //   const res = await (
-  //     await fetch("/home/notice", { cache: "force-cache", next: { revalidate: 60 * 60 * 24 } })
-  //   ).json()
-  const res = [
-    { title: "거래규칙1", date: "1999-99-99", id: "v1" },
-    { title: "거래규칙2", date: "1999-99-99", id: "v2" },
-    { title: "거래규칙3", date: "1999-99-99", id: "v3" }
-  ]
+  const res: noticeHome = await (
+    await fetch("/home/notice", { cache: "force-cache", next: { revalidate: 60 * 60 * 24 } })
+  ).json()
+
   return (
     <section className="[&>*]:py-3 [&>*]:font-bold">
       {res.map((item, index) => (

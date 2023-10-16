@@ -2,22 +2,7 @@
 import Link from "next/link"
 import useMore from "@/hooks/useMore"
 const BoardBody = ({ search }: { search: string }) => {
-  //   const { state, better } = useMore({ link: search ? `/board/search/${search}` : "/board" })
-  const state = {
-    list: [
-      { title: "게시글0", date: "9999-99-99", id: "v0" },
-      { title: "게시글1", date: "9999-99-99", id: "v1" },
-      { title: "게시글2", date: "9999-99-99", id: "v2" },
-      { title: "게시글3", date: "9999-99-99", id: "v3" },
-      { title: "게시글4", date: "9999-99-99", id: "v4" },
-      { title: "게시글5", date: "9999-99-99", id: "v5" },
-      { title: "게시글6", date: "9999-99-99", id: "v6" },
-      { title: "게시글7", date: "9999-99-99", id: "v7" },
-      { title: "게시글8", date: "9999-99-99", id: "v8" },
-      { title: "게시글9", date: "9999-99-99", id: "v9" }
-    ],
-    next: true
-  }
+  const { state, better } = useMore({ link: search ? `/board/search/${search}` : "/board" })
   return (
     <>
       <section className="flex flex-col min-h-[27rem]">
@@ -39,7 +24,7 @@ const BoardBody = ({ search }: { search: string }) => {
             type="button"
             value="More &#8897;"
             className="bg-blue-500 w-[80%] ml-2 text-xl h-10 rounded-xl hover:opacity-70 font-bold text-white"
-            // onClick={better}
+            onClick={better}
           />
         )}
       </footer>

@@ -17,3 +17,5 @@ type search = { params: { board_id: string } }
 type notice = { params: { notice_id: string } }
 
 type clearFn = { setState: SetterOrUpdater<boolean> }
+
+type noticeHome = { [key: string]: string }[]

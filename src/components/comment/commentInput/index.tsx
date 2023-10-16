@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form"
 
 const CommentInput = ({ url }: url) => {
   const { register, handleSubmit } = useForm()
-  // const { data, mutate } = useSWR(url)
   const { loading, valid } = useSubmit({ base: `${url}/new` })
   return (
     <form onSubmit={handleSubmit(valid)} className="flex">

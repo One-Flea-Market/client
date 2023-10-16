@@ -12,15 +12,15 @@ const CommentConfirm = (item: commentConfirm) => {
       value="수정하기"
       className="mx-1 hover:text-blue-300 cursor-pointer text-sm"
       onClick={async () => {
-        // mutate(
-        //   item.url,
-        //   (data: any) => {
-        //     const change = data?.find((fitem: any) => fitem === item),
-        //       exclude = data?.filter((fitem: any) => fitem !== change)
-        //     return [{ ...change, date: state.date, body: state.text }, ...exclude]
-        //   },
-        //   false
-        // )
+        mutate(
+          item.url,
+          (data: any) => {
+            const change = data?.find((fitem: any) => fitem === item),
+              exclude = data?.filter((fitem: any) => fitem !== change)
+            return [{ ...change, date: state.date, body: state.text }, ...exclude]
+          },
+          false
+        )
         const { result, message } = await (
           await axios.patch(`${item.url}/${item.id}/modify `, {
             date: state.date,

@@ -4,14 +4,14 @@ import { useRouter } from "next/navigation"
 import { useSWRConfig } from "swr"
 const ItemLike = ({ items_key, onlike }: item) => {
   const { refresh } = useRouter()
-  // const {mutate} = useSWRConfig()
+  const { mutate } = useSWRConfig()
   return (
     <div className="w-full flex justify-center">
       <label
         htmlFor="likeBtn"
         className="bg-gray-100 w-[60%] flex justify-center items-center h-12 rounded-lg hover:bg-gray-200"
         onClick={async () => {
-          //   mutate(`/items/${items_key}`,(data:any)=>({ ...data, onlike: !data.onlike }), false)
+          mutate(`/items/${items_key}`, (data: any) => ({ ...data, onlike: !data.onlike }), false)
           const { result, message } = await (
             await axios.patch(`/items/${items_key}/like`, { onlike })
           ).data

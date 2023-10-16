@@ -5,22 +5,12 @@ import Comment from "@/components/comment"
 import LoginCheck from "@/components/loginCheck"
 import useReset from "@/hooks/useReset/useReset"
 import dynamic from "next/dynamic"
-import { useLayoutEffect } from "react"
 import { useRecoilState } from "recoil"
 import useSWR from "swr"
 const InputForm = dynamic(() => import("@/components/inputForm"))
 const ItemBtn = dynamic(() => import("@/components/item/itemBtn"))
 const BoardDetail = ({ params: { board_id } }: search) => {
-  //const {data} = useSWR(`/board/${board_id}`)
-
-  const data = {
-    title: "게시글9",
-    date: "9999-99-99",
-    body: "게시글 입니다.",
-    user: "유저1",
-    id: "v9",
-    oneself: true
-  }
+  const { data } = useSWR(`/board/${board_id}`)
   const [state, setState] = useRecoilState(boardState)
   useReset({ setState })
 

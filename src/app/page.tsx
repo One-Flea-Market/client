@@ -4,7 +4,6 @@ import NoticeList from "@/components/noticeList"
 import Carousel from "@/components/carousel"
 
 const Home = async () => {
-  // const res = await(await fetch("/home/picture",{cache:"force-cache",next:{revalidate:60*60*24}})).json()
   const res = [
     "https://media.bunjang.co.kr/images/nocrop/1039348912_w1197.jpg",
     "https://media.bunjang.co.kr/images/nocrop/1040164730_w1197.jpg",

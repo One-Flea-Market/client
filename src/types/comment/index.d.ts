@@ -8,3 +8,5 @@ declare const data = {
   oneself: false
 }
 type commentConfirm = typeof data & url
+
+type comment = (typeof data)[]

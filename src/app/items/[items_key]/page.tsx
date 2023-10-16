@@ -6,32 +6,14 @@ import Carousel from "@/components/carousel"
 import LoginCheck from "@/components/loginCheck"
 import { useRecoilState } from "recoil"
 import { itemState } from "@/atoms/itemState"
-import { useLayoutEffect } from "react"
 import useReset from "@/hooks/useReset/useReset"
 const Registration = dynamic(() => import("@/components/registration"))
 const ItemLike = dynamic(() => import("@/components/item/itemLike"))
 const ItemBtn = dynamic(() => import("@/components/item/itemBtn"))
 const ItemsDetail = ({ params: { items_key } }: searchParams) => {
-  const data = {
-    id: items_key,
-    list: [
-      "https://media.bunjang.co.kr/images/nocrop/1039348912_w1197.jpg",
-      "https://media.bunjang.co.kr/images/nocrop/1040164730_w1197.jpg",
-      "https://media.bunjang.co.kr/images/nocrop/1036285342_w1197.jpg",
-      "https://media.bunjang.co.kr/images/nocrop/1036285313_w1197.jpg"
-    ],
-    title: "상품 제목입니다.",
-    date: "9999-99-99",
-    body: "상품 설명입니다.",
-    status: "거래",
-    price: "50000",
-    onself: true,
-    onlike: false
-  }
-
   const [state, setState] = useRecoilState(itemState)
+  const { data } = useSWR(`/items/${items_key}`)
   useReset({ setState })
-  // const {data} = useSWR(`/items/${items_key}`)
   return (
     <main>
       <LoginCheck>

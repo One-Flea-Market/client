@@ -21,13 +21,13 @@ const CommentBtn = (item: commentConfirm) => {
                 const { result, message } = await (
                   await axios.delete(`${item.url}/${item.id}/delete `)
                 ).data
-                // if (result)
-                // mutate(
-                //   item.url,
-                //   (data: any) => data.filter((fitem: any) => fitem.id !== item.id),
-                //   false
-                // )
-                // else alert(message)
+                if (result)
+                  mutate(
+                    item.url,
+                    (data: any) => data.filter((fitem: any) => fitem.id !== item.id),
+                    false
+                  )
+                else alert(message)
               }
             }
           }}
