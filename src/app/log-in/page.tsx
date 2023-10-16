@@ -1,4 +1,4 @@
-import UserInputComponent from "@/components/userInput/index"
+import UserInputComponent from "@/components/userInput"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
