@@ -18,7 +18,6 @@ const UserInputComponent = ({ settingOption, pageValue, url }: userInput) => {
     formState: { errors },
     watch
   } = useForm()
-
   const state = useRecoilValue(signState)
   const { replace, refresh } = useRouter()
   const { loading, valid } = useSubmit({ base: url })
