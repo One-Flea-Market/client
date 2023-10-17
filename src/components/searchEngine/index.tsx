@@ -6,9 +6,7 @@ const SearchEngine = ({ mode }: mode) => {
   const { push } = useRouter()
   const { register, handleSubmit } = useForm()
 
-  const valied = (data: any) => {
-    push(`/${mode}?search=${data[`${mode} text`]}`)
-  }
+  const valied = (data: searchString) => push(`/${mode}?search=${data[`${mode} text`]}`)
 
   return (
     <form className="flex relative justify-end -mt-1" onSubmit={handleSubmit(valied)}>

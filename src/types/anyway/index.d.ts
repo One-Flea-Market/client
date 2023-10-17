@@ -19,3 +19,7 @@ type notice = { params: { notice_id: string } }
 type clearFn = { setState: SetterOrUpdater<boolean> }
 
 type noticeHome = { [key: string]: string }[]
+
+type searchString = {
+  [key in mode["mode"] as `${key} text`]?: string
+}
