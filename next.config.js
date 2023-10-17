@@ -6,19 +6,16 @@ const nextConfig = {
             {
                 protocol: "https",
                 hostname: "media.bunjang.co.kr",
-                port: "",
                 pathname: "/images/nocrop/**"
             },
             {
                 protocol: "https",
-                hostname: "media.bunjang.co.kr",
-                port: "",
-                pathname: "/product/**"
+                hostname: "oneflea.s3.ap-northeast-2.amazonaws.com",
+                pathname: "/**"
             }
         ]
     },
     reactStrictMode: false,
-    experimental: { serverActions: true }
 }
 
 module.exports = nextConfig
