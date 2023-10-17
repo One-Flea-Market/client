@@ -3,7 +3,7 @@ import useMore from "@/hooks/useMore"
 import Link from "next/link"
 
 const Notice = () => {
-  const { state, better } = useMore({ link: "/notice" })
+  const { state, better } = useMore<"board">({ link: "/notice" })
   return (
     <main className="gird grid-cols-1 [&>*]:font-bold w-full pt-1">
       <section className="flex w-full justify-between mb-3 ">

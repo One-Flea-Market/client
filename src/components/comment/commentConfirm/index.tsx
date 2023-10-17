@@ -15,8 +15,8 @@ const CommentConfirm = (item: commentConfirm) => {
         mutate(
           item.url,
           (data: any) => {
-            const change = data?.find((fitem: any) => fitem === item),
-              exclude = data?.filter((fitem: any) => fitem !== change)
+            const change = data?.find((fitem: comment[number]) => fitem === item),
+              exclude = data?.filter((fitem: comment[number]) => fitem !== change)
             return [{ ...change, date: state.date, body: state.text }, ...exclude]
           },
           false

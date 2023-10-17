@@ -5,9 +5,9 @@ import useSubmit from "@/hooks/useSubmit/index"
 import useMovement from "@/hooks/useMovement"
 import { signState } from "@/atoms/signAuth"
 import { useRecoilValue } from "recoil"
+import dynamic from "next/dynamic"
 import AuthButton from "./authButton"
 import Input from "./Input"
-import dynamic from "next/dynamic"
 const EmailAuth = dynamic(() => import("./emailAuth"))
 const UserInputComponent = ({ settingOption, pageValue, url }: userInput) => {
   const {

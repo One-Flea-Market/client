@@ -4,8 +4,7 @@ import useMore from "@/hooks/useMore"
 import Product from "./product"
 import XIcon from "./xIcon"
 function ProductList({ link }: path) {
-  const { state, better } = useMore({ link })
-  // useMore 제네릭 추가
+  const { state, better } = useMore<"product">({ link })
   return (
     <>
       <section className="grid grid-cols-3 md:grid-cols-4 gap-5 pt-3 [&>*]:font-bold">

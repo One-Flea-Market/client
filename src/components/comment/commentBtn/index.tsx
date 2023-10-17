@@ -24,7 +24,7 @@ const CommentBtn = (item: commentConfirm) => {
                 if (result)
                   mutate(
                     item.url,
-                    (data: any) => data.filter((fitem: any) => fitem.id !== item.id),
+                    (data: any) => data.filter((fitem: comment[number]) => fitem.id !== item.id),
                     false
                   )
                 else alert(message)

@@ -2,7 +2,9 @@
 import Link from "next/link"
 import useMore from "@/hooks/useMore"
 const BoardBody = ({ search }: { search: string }) => {
-  const { state, better } = useMore({ link: search ? `/board/search/${search}` : "/board" })
+  const { state, better } = useMore<"board">({
+    link: search ? `/board/search/${search}` : "/board"
+  })
   return (
     <>
       <section className="flex flex-col min-h-[27rem]">
