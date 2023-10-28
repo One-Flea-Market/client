@@ -23,7 +23,6 @@ const Product = (item: products) => {
             <div className="max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
               {item.price}
             </div>
-            <span>원</span>
           </div>
         </div>
 
