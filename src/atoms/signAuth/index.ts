@@ -14,3 +14,11 @@ export const signAuth = atom({
   key: `state ${v1()}`,
   default: ""
 })
+
+export const message = atom({
+  key: `message ${v1()}`,
+  default: {
+    username: { message: "", value: "" },
+    email: { message: "", value: "" }
+  }
+})

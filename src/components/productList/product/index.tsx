@@ -12,7 +12,7 @@ const Product = (item: products) => {
         width={500}
         height={500}
         loading="lazy"
-        className="rounded-lg"
+        className="rounded-lg min-h-[30vh] max-h-[30vh]"
       />
       <div className="flex justify-between items-center pl-2">
         <div className="max-w-[70%]">

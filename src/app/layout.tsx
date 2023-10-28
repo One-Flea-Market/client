@@ -5,8 +5,11 @@ import CustomConfig from "@/components/customConfig"
 const inter = Inter({ subsets: ["cyrillic"] })
 
 export default async function RootLayout({ children }: child) {
-  let login = true
-  // const {login} = await (await fetch("/check", { cache: "no-store" })).json()
+  const { login } = await (
+    await fetch(`${process.env.SECRET_URL}/check`, {
+      cache: "no-store"
+    })
+  ).json()
   return (
     <html lang="ko">
       <body className={inter.className}>

@@ -3,7 +3,9 @@ import Link from "next/link"
 import useMore from "@/hooks/useMore"
 const BoardBody = ({ search }: { search: string }) => {
   const { state, better } = useMore<"board">({
-    link: search ? `/board/search/${search}` : "/board"
+    link: search
+      ? `${process.env.NEXT_PUBLIC_SECRET_URL}/board/search/${search}`
+      : `${process.env.NEXT_PUBLIC_SECRET_URL}/board`
   })
   return (
     <>

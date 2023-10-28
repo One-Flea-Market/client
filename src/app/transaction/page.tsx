@@ -8,7 +8,13 @@ const Transaction = ({ searchParams: { search } }: { searchParams: { search: str
         <h1 className="text-xl md:text-3xl">거래</h1>
         <SearchEngine mode="transaction" />
       </section>
-      <ProductList link={search ? `/transaction/search/${search}` : "/transaction"} />
+      <ProductList
+        link={
+          search
+            ? `${process.env.SECRET_URL}/transaction/search/${search}`
+            : `${process.env.SECRET_URL}/transaction`
+        }
+      />
       <Icon url="/registration" />
     </main>
   )

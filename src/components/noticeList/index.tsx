@@ -2,7 +2,10 @@ import Link from "next/link"
 
 const NoticeList = async () => {
   const res: noticeHome = await (
-    await fetch("/home/notice", { cache: "force-cache", next: { revalidate: 60 * 60 * 24 } })
+    await fetch(`${process.env.SECRET_URL}/home/notice`, {
+      // cache: "force-cache",
+      next: { revalidate: 60 * 60 * 24 }
+    })
   ).json()
 
   return (

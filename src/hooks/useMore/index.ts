@@ -19,7 +19,8 @@ const useMore = <str extends "board" | "product">({ link }: Pick<path, "link">) 
   const better = async () => {
     try {
       const data = await (await axios(link)).data
-      return setState(state => ({ ...state, ...data }))
+      console.log(data)
+      return setState(state => ({ ...data, ...state }))
     } catch {
       refresh()
     }

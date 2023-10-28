@@ -9,7 +9,13 @@ const Rental = ({ searchParams: { search } }: { searchParams: { search: string }
         <h1 className="text-xl md:text-3xl">대여</h1>
         <SearchEngine mode="rental" />
       </section>
-      <ProductList link={search ? `/rental/search/${search}` : "/rental"} />
+      <ProductList
+        link={
+          search
+            ? `${process.env.SECRET_URL}/rental/search/${search}`
+            : `${process.env.SECRET_URL}/rental`
+        }
+      />
       <Icon url="/registration" />
     </main>
   )

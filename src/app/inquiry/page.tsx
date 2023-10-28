@@ -19,7 +19,7 @@ const Inquiry = () => {
             { type: "email", plac: "email", id: "email" }
           ]}
           anyway={{ plac: "문의 내용", value: "문의하기" }}
-          base="/inquiry"
+          base={`${process.env.SECRET_URL}/inquiry`}
         />
       </section>
     </main>

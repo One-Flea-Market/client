@@ -38,7 +38,7 @@ const Home = async () => {
           </div>
         </article>
       </section>
-      <ProductList link="/home/product" />
+      <ProductList link={`${process.env.SECRET_URL}/home/product`} />
     </>
   )
 }
