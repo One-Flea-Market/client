@@ -12,7 +12,7 @@ const Writing = () => {
           <InputForm
             formArr={[{ type: "text", plac: "제목을 입력하세요. (최대20자)", id: "title" }]}
             anyway={{ plac: "게시글 내용", value: "작성하기" }}
-            base="/board/new "
+            base={`${process.env.SECRET_URL}/board/new`}
             after="/board"
           />
         </LoginCheck>

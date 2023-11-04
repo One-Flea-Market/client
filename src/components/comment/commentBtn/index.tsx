@@ -1,10 +1,9 @@
 import axios from "axios"
 import { commentModify } from "@/atoms/commentModify"
 import { useSetRecoilState } from "recoil"
-import { useSWRConfig } from "swr"
+import { getCookie } from "cookies-next"
 const CommentBtn = (item: commentConfirm) => {
   const setState = useSetRecoilState(commentModify)
-  const { mutate } = useSWRConfig()
   return (
     <div className="flex [&>*]:text-sm">
       {["수정", "삭제"].map(str => (
@@ -19,15 +18,14 @@ const CommentBtn = (item: commentConfirm) => {
             else {
               if (window.confirm(`댓글을 ${str} 하시겠습니까?`)) {
                 const { result, message } = await (
-                  await axios.delete(`${item.url}/${item.id}/delete `)
+                  await axios.delete(`${item.url}/${item.id}/delete `, {
+                    data: {
+                      token: getCookie("token")
+                    }
+                  })
                 ).data
-                if (result)
-                  mutate(
-                    item.url,
-                    (data: any) => data.filter((fitem: comment[number]) => fitem.id !== item.id),
-                    false
-                  )
-                else alert(message)
+                if (!result) alert(message)
+                window.location.reload()
               }
             }
           }}

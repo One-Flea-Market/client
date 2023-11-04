@@ -1,5 +1,13 @@
+import { cookies } from "next/headers"
 const UserInfo = async () => {
-  const data = await (await fetch("/admin")).json()
+  const data = await (
+    await fetch(`${process.env.SECRET_URL}/admin`, {
+      method: "post",
+      headers: { "Content-Type": "Application/json" },
+      body: JSON.stringify({ token: cookies().get("token")?.value })
+    })
+  ).json()
+
   return (
     <section className="flex items-center">
       <div>
@@ -19,10 +27,10 @@ const UserInfo = async () => {
         </svg>
       </div>
       <div className="[&>*]:my-2 md:[&>*]:my-3 [&>*]:text-sm md:[&>*]:text-base">
-        <div>닉네임: {data.username}</div>
-        <div>email: {data.email}</div>
-        <div>가입 날짜: {data.date}</div>
-        <div>핸드폰: {data["phone-number"]}</div>
+        <div>닉네임: {data.response.username}</div>
+        <div>email: {data.response.email}</div>
+        <div>가입 날짜: {data.response.date}</div>
+        <div>핸드폰: {data.response["phone_number"]}</div>
       </div>
     </section>
   )

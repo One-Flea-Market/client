@@ -2,14 +2,11 @@ import Link from "next/link"
 import "./globals.css"
 import { Inter } from "next/font/google"
 import CustomConfig from "@/components/customConfig"
+import { cookies } from "next/headers"
 const inter = Inter({ subsets: ["cyrillic"] })
 
 export default async function RootLayout({ children }: child) {
-  const { login } = await (
-    await fetch(`${process.env.SECRET_URL}/check`, {
-      cache: "no-store"
-    })
-  ).json()
+  const login = cookies()
   return (
     <html lang="ko">
       <body className={inter.className}>
@@ -34,7 +31,7 @@ export default async function RootLayout({ children }: child) {
             </span>
           </div>
           <div className="text-xs lg:[&>*]:text-base [&>*:nth-child(even)]:mx-5 ">
-            {login ? (
+            {login.has("token") ? (
               <>
                 {["admin", "log_out", "cart"].map(item => (
                   <Link key={item} href={`/${item}`} prefetch={false}>

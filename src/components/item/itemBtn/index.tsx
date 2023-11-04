@@ -1,11 +1,9 @@
 "use client"
 import { itemState, boardState } from "@/atoms/itemState"
 import axios from "axios"
-import { useRouter } from "next/navigation"
 import { useSetRecoilState } from "recoil"
 
 const ItemBtn = ({ link, path }: path) => {
-  const { refresh, back } = useRouter()
   const setState = useSetRecoilState(path ? boardState : itemState)
   return (
     <>
@@ -21,10 +19,10 @@ const ItemBtn = ({ link, path }: path) => {
             else {
               if (window.confirm("게시물을 삭제하시겠습니까?")) {
                 const { result, message } = await (await axios.delete(link)).data
-                if (result) back()
+                if (result) window.history.back()
                 else {
                   alert(message)
-                  refresh()
+                  window.location.reload()
                 }
               }
             }

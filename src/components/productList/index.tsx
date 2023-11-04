@@ -14,18 +14,18 @@ function ProductList({ link }: path) {
               <Product {...item} />
             </Link>
 
-            {link === "/cart" ? <XIcon id={item.id} link={link} /> : null}
+            {link.includes("cart") ? <XIcon id={item.id} link={link} /> : null}
           </div>
         ))}
       </section>
 
-      {link !== "/cart" && link !== "/admin/product" && (
+      {!link.includes("cart") && !link.includes("admin") && (
         <footer className="w-full flex justify-center mt-5">
           {state.next && (
             <input
               type="button"
               value="More &#8897;"
-              className="bg-blue-500 w-[70%] font-bold text-white text-xl rounded-xl hover:opacity-70 h-10"
+              className="bg-blue-500 w-[70%] font-bold text-white text-xl rounded-xl hover:opacity-70 h-10 outline-none"
               onClick={better}
             />
           )}

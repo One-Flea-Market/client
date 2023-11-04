@@ -12,7 +12,7 @@ const Admin = () => {
       <section className="pt-4 border-t border-gray-300">
         <h3>등록한 거래/대여 상품</h3>
         <LoginCheck>
-          <ProductList link="/admin/product" />
+          <ProductList link={`${process.env.SECRET_URL}/admin/product`} />
         </LoginCheck>
       </section>
     </main>

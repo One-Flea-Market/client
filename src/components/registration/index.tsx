@@ -9,6 +9,7 @@ import ShowImage from "./showImage"
 import TitleInput from "./titleInput"
 import { useRecoilState } from "recoil"
 import { registration } from "@/atoms/registration"
+import { getCookie } from "cookies-next"
 function Registration(props: registration) {
   const [{ list, status }, setState] = useRecoilState(registration)
   const {
@@ -19,7 +20,7 @@ function Registration(props: registration) {
   const { loading, valid } = useSubmit({
     base: props.url,
     type: props.type,
-    more: { list, status }
+    more: { list, status, token: getCookie("token") }
   })
   useMovement()
   useLayoutEffect(() => {

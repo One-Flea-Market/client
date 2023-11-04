@@ -6,13 +6,26 @@ import LoginCheck from "@/components/loginCheck"
 import useReset from "@/hooks/useReset/useReset"
 import dynamic from "next/dynamic"
 import { useRecoilState } from "recoil"
-import useSWR from "swr"
+import { useState, useEffect } from "react"
+import axios from "axios"
+import { getCookie } from "cookies-next"
 const InputForm = dynamic(() => import("@/components/inputForm"))
 const ItemBtn = dynamic(() => import("@/components/item/itemBtn"))
 const BoardDetail = ({ params: { board_id } }: search) => {
-  const { data } = useSWR(`/board/${board_id}`)
   const [state, setState] = useRecoilState(boardState)
   useReset({ setState })
+  const [data, setData] = useState<any>({})
+  useEffect(() => {
+    void (async () => {
+      setData(
+        await (
+          await axios.post(`${process.env.NEXT_PUBLIC_SECRET_URL}/board/${board_id}`, {
+            token: getCookie("token")
+          })
+        ).data
+      )
+    })()
+  }, [board_id])
 
   return (
     <main className="[&>*]:font-bold">
@@ -40,7 +53,7 @@ const BoardDetail = ({ params: { board_id } }: search) => {
                   </div>
                 ) : null}
               </div>
-              <Comment url={`/board/${board_id}/comment `} />
+              <Comment url={`${process.env.NEXT_PUBLIC_SECRET_URL}/board/${board_id}/comment `} />
             </footer>
           </>
         ) : (

@@ -1,6 +1,10 @@
 import Link from "next/link"
 const NoticeDetail = async ({ params: { notice_id } }: notice) => {
-  const data = await (await fetch(`/notice/${notice_id} `, { cache: "no-store" })).json()
+  const data = await (
+    await fetch(`${process.env.SECRET_URL}/notice/${notice_id} `, {
+      next: { revalidate: 60 * 60 * 24 }
+    })
+  ).json()
   return (
     <main className="[&>*]:font-bold">
       <section className="flex w-full justify-between items-baseline pb-2 border-b border-b-gray-400">

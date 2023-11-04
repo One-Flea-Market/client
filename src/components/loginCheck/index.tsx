@@ -1,19 +1,16 @@
 "use client"
-import axios from "axios"
-import { useRouter } from "next/navigation"
 import { useLayoutEffect } from "react"
+import { getCookie } from "cookies-next"
 const LoginCheck = ({ children }: child) => {
-  const { replace, refresh } = useRouter()
   useLayoutEffect(() => {
     void (async () => {
       try {
-        const data = await (await axios("/check")).data
-        if (!data.login) replace("/log-in")
+        if (!getCookie("token")) window.location.replace("/log-in")
       } catch {
-        refresh()
+        window.location.reload()
       }
     })()
-  }, [replace, refresh])
+  }, [])
   return <>{children}</>
 }
 export default LoginCheck

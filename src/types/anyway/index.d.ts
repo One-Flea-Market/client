@@ -1,6 +1,6 @@
 type url = { url: string }
 
-type path = { link: string; path?: boolean }
+type path = { link: string; path?: boolean; page?: number }
 
 type child = { children: ReactNode }
 

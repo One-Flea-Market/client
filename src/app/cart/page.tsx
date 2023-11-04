@@ -6,7 +6,7 @@ const Cart = () => {
     <main className="[&>*]:font-bold">
       <LoginCheck>
         <h1 className="text-xl">Cart</h1>
-        <ProductList link="/cart" />
+        <ProductList link={`${process.env.SECRET_URL}/cart`} />
       </LoginCheck>
     </main>
   )

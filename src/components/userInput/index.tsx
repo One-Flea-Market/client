@@ -1,8 +1,7 @@
 "use client"
-import { Fragment, use } from "react"
+import { Fragment } from "react"
 import { useForm } from "react-hook-form"
 import useSubmit from "@/hooks/useSubmit/index"
-import useMovement from "@/hooks/useMovement"
 import { message, signState } from "@/atoms/signAuth"
 import { useRecoilValue } from "recoil"
 import dynamic from "next/dynamic"
@@ -28,8 +27,6 @@ const UserInputComponent = ({ settingOption, pageValue, url }: userInput) => {
           }
         : null
   })
-  // useMovement()
-  // console.log(watch())
   return (
     <form className="flex justify-center flex-col" onSubmit={handleSubmit(valid)}>
       <div className="flex flex-col mt-5 w-[60vw]">

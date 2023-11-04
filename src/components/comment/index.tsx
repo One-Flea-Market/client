@@ -1,20 +1,38 @@
 "use client"
-import { useLayoutEffect } from "react"
-import useSWR from "swr"
+import { useLayoutEffect, useEffect, useState } from "react"
 import CommentInput from "./commentInput"
 import { useRecoilState } from "recoil"
 import { commentModify } from "@/atoms/commentModify"
 import dynamic from "next/dynamic"
+import axios from "axios"
+import { getCookie } from "cookies-next"
 const CommentModify = dynamic(() => import("./commentModify"))
 const CommentBtn = dynamic(() => import("./commentBtn"))
 const CommentConfirm = dynamic(() => import("./commentConfirm"))
 
 const Comment = ({ url }: url) => {
-  const { data } = useSWR<comment>(url)
+  const [data, setData] = useState<any>([])
   const [state, setState] = useRecoilState<commentModify>(commentModify)
   useLayoutEffect(() => {
+    void (async () => {
+      setData(
+        await (
+          await axios.post(
+            url,
+            { token: getCookie("token") },
+            {
+              headers: {
+                "Content-Type": "application/json"
+              }
+            }
+          )
+        ).data
+      )
+    })()
+  }, [url])
+  useEffect(() => {
     data &&
-      data.map(item => {
+      data.map((item: any) => {
         if (item.oneself) {
           setState(state => ({ ...state, [item.id]: { modify: true, text: "", date: item.date } }))
         }
@@ -26,7 +44,7 @@ const Comment = ({ url }: url) => {
 
       <article className="border-t border-gray-300 mt-2 ">
         {data &&
-          data.map(item => (
+          data.map((item: any) => (
             <div key={item.id} className="border-b border-gray-300 p-1">
               <div className="flex w-full justify-between">
                 <div className="text-sm max-w-[80%] overflow-hidden text-ellipsis whitespace-nowrap">

@@ -1,9 +1,10 @@
 import useSubmit from "@/hooks/useSubmit"
+import { getCookie } from "cookies-next"
 import { useForm } from "react-hook-form"
 
 const CommentInput = ({ url }: url) => {
   const { register, handleSubmit } = useForm()
-  const { loading, valid } = useSubmit({ base: `${url}/new` })
+  const { loading, valid } = useSubmit({ base: `${url}/new`, more: { token: getCookie("token") } })
   return (
     <form onSubmit={handleSubmit(valid)} className="flex">
       <textarea

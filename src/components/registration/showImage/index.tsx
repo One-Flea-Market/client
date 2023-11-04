@@ -1,14 +1,20 @@
+/*eslint-disable*/
 import { registration } from "@/atoms/registration"
+import { useEffect } from "react"
 import { useRecoilState } from "recoil"
 const ShowImage = () => {
   const [{ list }, setState] = useRecoilState(registration)
+  useEffect(() => {
+    return () => {
+      list.map(item => URL.revokeObjectURL(item))
+    }
+  }, [])
   return (
     <article className="border-b border-gray-300">
       <label
         htmlFor="input-file"
         onChange={(event: any) => {
-          const target = event.target
-          const imageLists = target.files
+          const imageLists = event.target.files
           let imageUrlLists: string[] = [...list]
           for (let i = 0; i < imageLists.length; i++)
             imageUrlLists.push(URL.createObjectURL(imageLists[i]))

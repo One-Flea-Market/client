@@ -9,7 +9,13 @@ const Items = ({ searchParams: { search } }: { searchParams: { search: string } 
         <h1 className="text-xl md:text-3xl">모든상품</h1>
         <SearchEngine mode="items" />
       </section>
-      <ProductList link={search ? `/items/search/${search}` : "/items"} />
+      <ProductList
+        link={
+          search
+            ? `${process.env.NEXT_PUBLIC_SECRET_URL}/items/search/${search}`
+            : `${process.env.NEXT_PUBLIC_SECRET_URL}/items`
+        }
+      />
       <Icon url="/registration" />
     </main>
   )

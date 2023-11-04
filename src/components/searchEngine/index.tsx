@@ -12,10 +12,10 @@ const SearchEngine = ({ mode }: mode) => {
     <form className="flex relative justify-end -mt-1" onSubmit={handleSubmit(valied)}>
       <input
         type="text"
-        placeholder="제목 검색(최소3자)"
+        placeholder="제목 검색(최소1자)"
         className="border-4 border-blue-300 outline-none py-1 pl-1 pr-8 rounded-lg w-[80%] md:w-full"
         {...register(`${mode} text`, {
-          minLength: 3,
+          minLength: 1,
           required: true
         })}
       />
