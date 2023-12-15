@@ -4,12 +4,18 @@ import { useForm } from "react-hook-form"
 
 const CommentInput = ({ url }: url) => {
   const { register, handleSubmit } = useForm()
-  const { loading, valid } = useSubmit({ base: `${url}/new`, more: { token: getCookie("token") } })
+  const after = url.split("/").at(-2)
+
+  const { loading, valid } = useSubmit({
+    base: `${url.trim()}/new`,
+    more: { token: getCookie("token") },
+    after
+  })
   return (
     <form onSubmit={handleSubmit(valid)} className="flex">
       <textarea
         className="resize-none border-4 border-blue-300 w-[85%] md:w-[90%] rounded-lg p-2 outline-none"
-        {...register("body", {
+        {...register("text", {
           required: true,
           minLength: 5
         })}

@@ -4,7 +4,7 @@ type path = { link: string; path?: boolean; page?: number }
 
 type child = { children: ReactNode }
 
-type x = Omit<path, "path"> & Pick<typeof data, "id">
+type x = Pick<typeof data, "id"> & { filter: (id: string) => void }
 
 type searchParams = { params: { items_key: string } }
 

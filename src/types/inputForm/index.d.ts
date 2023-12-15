@@ -3,7 +3,7 @@ interface inputForm {
   anyway: { plac: string; value: string; defv?: string }
   base: string
   after?: string
-  type?: "post" | "patch" | "delete"
+  type?: "post" | "patch" | "delete" | "put"
 }
 
 type content = inputForm["formArr"][number]

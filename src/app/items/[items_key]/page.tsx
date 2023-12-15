@@ -63,7 +63,11 @@ const ItemsDetail = ({ params: { items_key } }: searchParams) => {
                         link={`${process.env.NEXT_PUBLIC_SECRET_URL}/items/${items_key}/delete `}
                       />
                     ) : (
-                      <ItemLike items_key={items_key} onlike={data.Product[0].onlike} />
+                      <ItemLike
+                        items_key={items_key}
+                        onlike={data.Product[0].onlike}
+                        setData={setData}
+                      />
                     )}
                   </article>
                 </section>
@@ -81,7 +85,7 @@ const ItemsDetail = ({ params: { items_key } }: searchParams) => {
         ) : (
           <Registration
             title="상품 수정"
-            imgArr={data.Product[0].list}
+            imgArr={data.Product[0].image}
             subTitle={data.Product[0].title}
             price={data.Product[0].price}
             text={data.Product[0].body}

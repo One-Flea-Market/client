@@ -1,6 +1,7 @@
 "use client"
 import { itemState, boardState } from "@/atoms/itemState"
 import axios from "axios"
+import { getCookie } from "cookies-next"
 import { useSetRecoilState } from "recoil"
 
 const ItemBtn = ({ link, path }: path) => {
@@ -18,7 +19,9 @@ const ItemBtn = ({ link, path }: path) => {
             if (item === "수정") setState(state => !state)
             else {
               if (window.confirm("게시물을 삭제하시겠습니까?")) {
-                const { result, message } = await (await axios.delete(link)).data
+                const { result, message } = await (
+                  await axios.delete(link, { data: { token: getCookie("token") } })
+                ).data
                 if (result) window.history.back()
                 else {
                   alert(message)

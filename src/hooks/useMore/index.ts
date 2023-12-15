@@ -22,7 +22,7 @@ const useMore = <str extends "board" | "product">({ link }: Pick<path, "link">) 
         window.location.reload()
       }
     })()
-  }, [setState, link])
+  }, [link])
 
   const better = async () => {
     try {
@@ -34,12 +34,11 @@ const useMore = <str extends "board" | "product">({ link }: Pick<path, "link">) 
   }
 
   const filter = (id: string) => {
-    const list = state.list.filter(item => item.id !== id) as multifulData<str>
-    setState({ list })
-    axios.delete(`${link}/${id}`, {
-      data: { token: getCookie("token") }
+    setState(state => {
+      const list = [...(state.list.filter(item => item.id !== id) as any)]
+      return { ...state, list }
     })
-    // window.location.reload()
+    axios.delete(`${link}/${id}`, { data: { token: getCookie("token") } })
   }
 
   return { state, better, filter }

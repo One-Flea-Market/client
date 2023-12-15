@@ -1,18 +1,13 @@
 import { useState } from "react"
 import { setCookie } from "cookies-next"
-import { v1 } from "uuid"
 const useSubmit = ({ base, after, more, type = "post" }: submitData) => {
   const time = new Date()
   const [loading, setLoading] = useState(false)
   const valid = async (data: any) => {
-    // let formData = new FormData()
-    // const deceline =
-    //   (base.includes("modify") || base.includes("registration")) && !!more.list.length
     const moudule = {
       ...data,
       ...more,
       date: `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`
-      // list: more?.list ? formData : null
     }
     if (more && more.list && !more.list.length) {
       alert("모든 양식을 선택 해주세요.")
@@ -23,29 +18,17 @@ const useSubmit = ({ base, after, more, type = "post" }: submitData) => {
       alert("모든 양식을 선택 해주세요.")
       return
     }
-    // if (deceline) {
-    //   for (let i = 0; i < more.list.length; i++) {
-    //     formData.append("file", more.list[i])
-    //   }
-    //   formData.append("product", JSON.stringify(moudule))
-    // }
 
     if (base.includes("/login")) delete moudule["date"]
     try {
       setLoading(true)
       const res = await (
         await fetch(base, {
-          headers: {
-            "Content-Type":
-              //  deceline ? "multipart/form-data; boundary=" + v1() :
-              "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           credentials: "include",
           method: type,
-          body:
-            // deceline ? formData :
-            JSON.stringify(moudule)
-          //withCredentials: true (axios전용)
+          body: JSON.stringify(moudule),
+          mode: "cors"
         })
       ).json()
       if (res.result) {
@@ -61,6 +44,7 @@ const useSubmit = ({ base, after, more, type = "post" }: submitData) => {
     } catch (error) {
       alert("다시 시도 해주세요.")
       setLoading(false)
+      console.log(error)
     }
   }
   return { loading, valid }

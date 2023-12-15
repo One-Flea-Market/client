@@ -4,7 +4,7 @@ import useMore from "@/hooks/useMore"
 import Product from "./product"
 import XIcon from "./xIcon"
 function ProductList({ link }: path) {
-  const { state, better } = useMore<"product">({ link })
+  const { state, better, filter } = useMore<"product">({ link })
   return (
     <>
       <section className="grid grid-cols-3 md:grid-cols-4 gap-5 pt-3 [&>*]:font-bold">
@@ -14,7 +14,7 @@ function ProductList({ link }: path) {
               <Product {...item} />
             </Link>
 
-            {link.includes("cart") ? <XIcon id={item.id} link={link} /> : null}
+            {link.includes("cart") ? <XIcon id={item.id} filter={filter} /> : null}
           </div>
         ))}
       </section>

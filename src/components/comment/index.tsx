@@ -1,8 +1,6 @@
 "use client"
 import { useLayoutEffect, useEffect, useState } from "react"
 import CommentInput from "./commentInput"
-import { useRecoilState } from "recoil"
-import { commentModify } from "@/atoms/commentModify"
 import dynamic from "next/dynamic"
 import axios from "axios"
 import { getCookie } from "cookies-next"
@@ -12,7 +10,7 @@ const CommentConfirm = dynamic(() => import("./commentConfirm"))
 
 const Comment = ({ url }: url) => {
   const [data, setData] = useState<any>([])
-  const [state, setState] = useRecoilState<commentModify>(commentModify)
+  const [state, setState] = useState<commentModify>({})
   useLayoutEffect(() => {
     void (async () => {
       setData(
@@ -31,13 +29,16 @@ const Comment = ({ url }: url) => {
     })()
   }, [url])
   useEffect(() => {
-    data &&
+    data.length &&
       data.map((item: any) => {
-        if (item.oneself) {
-          setState(state => ({ ...state, [item.id]: { modify: true, text: "", date: item.date } }))
+        if (item.onself) {
+          return setState(state => ({
+            ...state,
+            [item.id]: { modify: true, text: "", date: item.date }
+          }))
         }
       })
-  }, [setState, data])
+  }, [data])
   return (
     <section>
       <CommentInput url={url} />
@@ -56,18 +57,18 @@ const Comment = ({ url }: url) => {
                 <div className=" flex w-[80%] max-w-[80%] break-words justify-end items-center">
                   &rarr;
                   {state[item.id] === undefined ? (
-                    <div className="my-1 text-base w-[95%]">&nbsp;{item.body}</div>
+                    <div className="my-1 text-base w-[95%]">&nbsp;{item.text}</div>
                   ) : state[item.id]["modify"] ? (
-                    <div className="my-1 text-base w-[95%]">&nbsp;{item.body}</div>
+                    <div className="my-1 text-base w-[95%]">&nbsp;{item.text}</div>
                   ) : (
-                    <CommentModify {...item} />
+                    <CommentModify {...item} setState={setState} />
                   )}
                 </div>
-                {item.oneself ? (
+                {item.onself ? (
                   state[item.id] && state[item.id]["modify"] ? (
-                    <CommentBtn {...item} url={url} />
+                    <CommentBtn {...item} url={url} setState={setState} />
                   ) : (
-                    <CommentConfirm {...item} url={url} />
+                    <CommentConfirm {...item} url={url} state={state} setState={setState} />
                   )
                 ) : null}
               </div>

@@ -10,7 +10,9 @@ import TitleInput from "./titleInput"
 import { useRecoilState } from "recoil"
 import { registration } from "@/atoms/registration"
 import { getCookie } from "cookies-next"
+import { usePathname } from "next/navigation"
 function Registration(props: registration) {
+  const after = usePathname()
   const [{ list, status }, setState] = useRecoilState(registration)
   const {
     register,
@@ -19,13 +21,14 @@ function Registration(props: registration) {
   } = useForm()
   const { loading, valid } = useSubmit({
     base: props.url,
+    after,
     type: props.type,
     more: { list, status, token: getCookie("token") }
   })
   useMovement()
   useLayoutEffect(() => {
     setState({
-      list: props.imgArr ? props.imgArr : ([] as string[]),
+      list: props?.imgArr?.length ? props.imgArr : ([] as string[]),
       status: props.current ? props.current : "not"
     })
   }, [setState, props])

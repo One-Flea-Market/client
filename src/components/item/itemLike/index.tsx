@@ -1,18 +1,31 @@
 import axios from "axios"
 import { getCookie } from "cookies-next"
 import { motion } from "framer-motion"
-const ItemLike = ({ items_key, onlike }: item) => {
+const ItemLike = ({ items_key, onlike, setData }: item) => {
   return (
     <div className="w-full flex justify-center">
       <label
         htmlFor="likeBtn"
         className="bg-gray-100 w-[60%] flex justify-center items-center h-12 rounded-lg hover:bg-gray-200"
         onClick={async () => {
+          setData((state: any) => {
+            return {
+              Product: [
+                {
+                  ...state.Product[0],
+                  onlike: !state.Product[0].onlike
+                }
+              ]
+            }
+          })
           const { result, message } = await (
-            await axios.patch(`/items/${items_key}/like`, { onlike, token: getCookie("token") })
+            await axios.patch(`${process.env.NEXT_PUBLIC_SECRET_URL}/items/${items_key}/like`, {
+              onlike: !onlike,
+              token: getCookie("token")
+            })
           ).data
           if (!result) alert(message)
-          window.location.reload()
+          // window.location.reload()
         }}
       >
         <motion.svg

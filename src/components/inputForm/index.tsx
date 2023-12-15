@@ -3,13 +3,14 @@ import { useForm } from "react-hook-form"
 import useSubmit from "@/hooks/useSubmit/index"
 import useMovement from "@/hooks/useMovement"
 import InputContent from "./inputContent"
+import { getCookie } from "cookies-next"
 const InputForm = ({ formArr, anyway, base, after, type }: inputForm) => {
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm()
-  const { loading, valid } = useSubmit({ base, after, type })
+  const { loading, valid } = useSubmit({ base, after, type, more: { token: getCookie("token") } })
   useMovement()
   return (
     <form

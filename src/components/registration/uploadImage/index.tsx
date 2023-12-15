@@ -1,6 +1,7 @@
 import { registration } from "@/atoms/registration"
 import Image from "next/image"
 import { useRecoilState } from "recoil"
+import { v1 } from "uuid"
 const UploadImage = () => {
   const [{ list }, setState] = useRecoilState(registration)
   return (
@@ -12,7 +13,7 @@ const UploadImage = () => {
       {list.length ? (
         <>
           {list.map((item: string, index: number) => (
-            <div key={item} className="w-full h-[25vh] relative">
+            <div key={item + v1()} className="w-full h-[25vh] relative">
               <Image
                 src={item}
                 alt={`${item}-${index}`}
